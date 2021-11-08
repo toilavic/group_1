@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+  app:
+    image: node
+    volumes:
+      - "./frontend:/mnt/frontend"
+    working_dir: "/mnt/frontend"
+    entrypoint: "/bin/bash -c"
+    command:
+      - |
+        CI=true npm start || (\
+          echo '`npm start` failed, but the container is running...' && \
+          tail -f /dev/null \
+        )
+    ports:
+      - 3000:3000
+
+  backend:
+    image: node
+    volumes:
+      - "./backend:/mnt/backend"
+    working_dir: "/mnt/backend"
+    entrypoint: "/bin/bash -c"
+    command:
+      - |
+        CI=true node index.js || (\
+          echo '`npm start` failed, but the container is running...' && \
+          tail -f /dev/null \
+        )
+    ports:
+      - 4000:4000

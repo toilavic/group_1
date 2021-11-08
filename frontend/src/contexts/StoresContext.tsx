@@ -35,3 +35,5 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
         </StoresContext.Provider>
     )
 }
+
+export default StoresContextProvider

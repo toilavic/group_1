@@ -24,6 +24,8 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
     useEffect(() => {
         setStores(store)
     }, [])
+    console.log(stores);
+    
 
     const StoresContextData = {
         stores,

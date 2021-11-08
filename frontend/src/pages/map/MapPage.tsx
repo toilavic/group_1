@@ -10,9 +10,14 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { StoresContext } from "../../contexts/StoresContext";
 
 const MapPage = () => {
+    const { stores } = useContext(StoresContext);
+    console.log("print stores in MapPage: ", stores);
+    
   const auth = false;
 
   const classes = useStyles();

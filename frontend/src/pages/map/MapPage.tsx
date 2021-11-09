@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core";
+import { Star } from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -60,16 +61,21 @@ const MapPage = () => {
         <Grid container>
           <Grid item xs={7}>
             <Grid container>
-              <Grid item>
+              { stores.map( (store ) => {
+              return (
+              <Grid item key={store.id} >
                 <Paper elevation={3} className={classes.paperMap}>
-                  <Typography>Address: </Typography>
-                  <Typography>Price: </Typography>
-                  <Typography>Open Time: </Typography>
-                  <Typography>Puh: </Typography>
-                  <Typography>Description: </Typography>
-                  <Typography>Discount: </Typography>
+                  <Typography>Address: {store.address}</Typography>
+                  <Typography><Star /> {store.rate}</Typography>
+                  <Typography>Price: {store.price}</Typography>
+                  <Typography>Open Time: {store.openTime}</Typography>
+                  <Typography>Puh: {store.contactNumber}</Typography>
+                  <Typography>Description: {store.description}</Typography>
+                  <Typography>Discount: {store.discountRate}</Typography>
                 </Paper>
               </Grid>
+              );
+            })}
             </Grid>
           </Grid>
           <Grid xs={5}>Map will be showed here</Grid>

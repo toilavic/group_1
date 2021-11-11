@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import Showmap from "../../components/showmap/Showmap";
 import { StoresContext } from "../../contexts/StoresContext";
 
 const MapPage = () => {
@@ -78,7 +79,9 @@ const MapPage = () => {
             })}
             </Grid>
           </Grid>
-          <Grid xs={5}>Map will be showed here</Grid>
+          <Grid item xs={5}>
+            <Showmap stores = {stores} />
+          </Grid>
         </Grid>
       </Box>
     </Container>

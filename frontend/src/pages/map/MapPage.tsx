@@ -49,7 +49,7 @@ const MapPage = () => {
                   </Link>
                 </Typography>
                 <Typography variant="h6">
-                  <Link to="/" className={classes.linkBtn}>
+                  <Link to="/register" className={classes.linkBtn}>
                     REGISTER
                   </Link>
                 </Typography>

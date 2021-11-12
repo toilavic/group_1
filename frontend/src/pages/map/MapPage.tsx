@@ -17,10 +17,8 @@ import Showmap from "../../components/showmap/Showmap";
 import { StoresContext } from "../../contexts/StoresContext";
 
 const MapPage = () => {
-    const { stores } = useContext(StoresContext);
+    const { stores, auth, username } = useContext(StoresContext);
     console.log("print stores in MapPage: ", stores);
-    
-  const auth = false;
 
   const classes = useStyles();
 
@@ -39,13 +37,13 @@ const MapPage = () => {
                 <Button variant="text" color="inherit">
                   <Typography variant="h6">LOGOUT</Typography>
                 </Button>
-                <Typography color="inherit">Welcome admin</Typography>
+                <Typography color="inherit">Welcome {username}</Typography>
               </Stack>
             ) : (
               <Stack direction="row" spacing={2}>
                 <Typography variant="h6">
-                  <Link to="/" className={classes.linkBtn}>
-                    LOGOUT
+                  <Link to="/login" className={classes.linkBtn}>
+                    LOGIN
                   </Link>
                 </Typography>
                 <Typography variant="h6">

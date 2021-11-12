@@ -11,6 +11,7 @@ interface StoreContextProps{
 export interface StoresContextDefault{
     stores: interfaceStore[],
     Login: (email: string, password: string) => void,
+    Logout: () => void,
     auth: Boolean,
     username: string
 }
@@ -18,6 +19,7 @@ export interface StoresContextDefault{
 const storesContextDataDefault = {
     stores: [],
     Login: () => {},
+    Logout: () => {},
     auth: false,
     username: ''
 }
@@ -36,7 +38,7 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
         setAuth(false);
         setUsername('');
     }, [])
-    console.log(stores);
+    //console.log(stores);
 
     const Login = (email: string, password: string) => {
         //console.log(email, password);
@@ -53,12 +55,19 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
         } else {
             console.log("Email is not exist");
         }
+    };
+
+    const Logout = () => {
+        setAuth(false);
+        setUsername('');
     }
+    //console.log(username);
     
 
     const StoresContextData = {
         stores,
         Login,
+        Logout,
         auth,
         username
     }

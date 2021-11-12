@@ -20,7 +20,7 @@ const Login = () => {
   const handleSubmit = (event: ChangeEvent<HTMLInputElement>) => {
     //console.log("email: ", email, "password: ", password);
     //Login(email,password);
-    console.log(email, password);
+    //console.log(email, password);
     Login(email, password);
     event.preventDefault();
   };

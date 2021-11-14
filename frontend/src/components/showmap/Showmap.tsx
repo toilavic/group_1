@@ -3,7 +3,6 @@ import { Button, Card, CardContent, CardHeader, Typography } from "@mui/material
 import { useState } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import interfaceStore from "../../data/stores/interfaceStore";
-import store from "../../data/stores/stores";
 
 interface Props {
     stores: interfaceStore[];

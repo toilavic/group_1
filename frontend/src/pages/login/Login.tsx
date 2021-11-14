@@ -8,17 +8,20 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import { ChangeEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { ChangeEvent, useContext, useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { StoresContext } from "../../contexts/StoresContext";
 
 const Login = () => {
+  const {Login, auth} = useContext(StoresContext)
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const handleSubmit = (event: ChangeEvent<HTMLInputElement>) => {
     //console.log("email: ", email, "password: ", password);
     //Login(email,password);
-    console.log(email, password);
+    //console.log(email, password);
+    Login(email, password);
     event.preventDefault();
   };
 
@@ -26,7 +29,8 @@ const Login = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="xs">
+      {auth ? <Redirect to="/map" /> : (
+        <Container maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
@@ -79,6 +83,7 @@ const Login = () => {
           </Box>
         </Box>
       </Container>
+      )}
     </ThemeProvider>
   );
 };

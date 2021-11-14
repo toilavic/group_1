@@ -3,12 +3,14 @@ import { Button, Card, CardContent, CardHeader, Typography } from "@mui/material
 import { useState } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import interfaceStore from "../../data/stores/interfaceStore";
+import IStore from "../../data/stores/IStores";
 
 interface Props {
     stores: interfaceStore[];
+    test: IStore[];
 }
 
-const Showmap: React.FC<Props> = ({ stores }) => {
+const Showmap: React.FC<Props> = ({ stores, test }) => {
     const MAPBOX_TOKEN = "pk.eyJ1IjoiYnJvdGhlcmQiLCJhIjoiY2t2NnYyeTN6MWc2ejJubzA3dmE1ajdsYSJ9.D2EEYvFB43G4_0JQYJn63w";
 
     const [viewport, setViewport] = useState({
@@ -19,11 +21,11 @@ const Showmap: React.FC<Props> = ({ stores }) => {
 
     const [selectedRestaurant, setSelectedRestaurant]:any = useState(null);
     // console.log(selectedRestaurant);
+    console.log(test);
     
-
     return (
         <div>
-            <ReactMapGL
+            {/* <ReactMapGL
             {...viewport}
             mapboxApiAccessToken={MAPBOX_TOKEN}
             height = {650}
@@ -61,7 +63,48 @@ const Showmap: React.FC<Props> = ({ stores }) => {
                         </Card>
                     </Popup>
                 ) : null}
+            </ReactMapGL> */}
+
+            <ReactMapGL
+            {...viewport}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
+            height = {650}
+            width = {1200}
+            onViewportChange={(viewport:any)=>{
+                setViewport(viewport)
+            }}
+            mapStyle="mapbox://styles/mapbox/streets-v11"
+            >
+                {test.map((tam: any) => {
+                    return (
+                        <Marker key={tam.id} latitude={tam.location.coordinates[1]} longitude={tam.location.coordinates[0]}>
+                            <Button variant="text"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setSelectedRestaurant(tam);
+                            }}
+                            >
+                                <RestaurantMenu color="error" fontSize="large"/>
+                            </Button>
+                        </Marker>
+                    );
+                })}
+                {selectedRestaurant ? (
+                    <Popup latitude={selectedRestaurant.location.coordinates[1]} longitude={selectedRestaurant.location.coordinates[0]}
+                    onClose={()=>{setSelectedRestaurant(null)}}
+                    >
+                        <Card elevation={0} >
+                            <CardHeader title={selectedRestaurant.name} />
+                            <CardContent>
+                                <Typography>{selectedRestaurant.address}</Typography>
+                                <StarRounded color="warning" fontSize="large" />
+                                <Typography>{selectedRestaurant.price}</Typography>
+                            </CardContent>
+                        </Card>
+                    </Popup>
+                ) : null}
             </ReactMapGL>
+
         </div>
     )
 }

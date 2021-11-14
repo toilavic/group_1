@@ -1,0 +1,15 @@
+export default interface IStore {
+    id: string,
+    name: string,
+    address: string,
+    rate: [],
+    price: number,
+    opentime: Date,
+    contact_number: string,
+    description: string,
+    discount_rate: number,
+    instagram: string,
+    createdAt: Date,
+    updateAt: Date,
+    location: any,
+}

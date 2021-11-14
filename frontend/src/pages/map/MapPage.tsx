@@ -17,8 +17,10 @@ import Showmap from "../../components/showmap/Showmap";
 import { StoresContext } from "../../contexts/StoresContext";
 
 const MapPage = () => {
-    const { stores, auth, username, Logout } = useContext(StoresContext);
+    const { stores, auth, username, Logout, test } = useContext(StoresContext);
     //console.log("print stores in MapPage: ", stores);
+    //console.log(test);
+    
 
   const classes = useStyles();
 
@@ -80,7 +82,26 @@ const MapPage = () => {
             </Grid>
           </Grid>
           <Grid item xs={5}>
-            <Showmap stores = {stores} />
+            <Showmap stores = {stores} test = {test} />
+          </Grid>
+        </Grid>
+      </Box>
+      <Box>
+        <Grid container>
+          <Grid item xs={12}>
+            <Grid>
+            {test.map((tam) => {
+              return (
+                <Grid item key={tam.id}>
+                <Paper>
+                  <Typography>{tam.address}</Typography>
+                  <Typography>{tam.location.coordinates[0]}</Typography>
+                  <Typography>{tam.location.coordinates[1]}</Typography>
+                </Paper>
+                </Grid>
+              )
+            })}
+            </Grid>
           </Grid>
         </Grid>
       </Box>

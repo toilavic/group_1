@@ -2,6 +2,8 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 import interfaceStore from "../data/stores/interfaceStore";
 import store from "../data/stores/stores";
 import users from "../data/users/users"
+import axios from "axios";
+import IStores from "../data/stores/IStores"
 
 interface StoreContextProps{
     children: ReactNode
@@ -12,7 +14,8 @@ export interface StoresContextDefault{
     Login: (email: string, password: string) => void,
     Logout: () => void,
     auth: Boolean,
-    username: string
+    username: string,
+    test: IStores[]
 }
 
 const storesContextDataDefault = {
@@ -20,8 +23,11 @@ const storesContextDataDefault = {
     Login: () => {},
     Logout: () => {},
     auth: false,
-    username: ''
+    username: '',
+    test: [],
 }
+
+
 
 export const StoresContext = createContext<StoresContextDefault>(
     storesContextDataDefault
@@ -31,13 +37,28 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
     const [stores, setStores] = useState<interfaceStore[]>(storesContextDataDefault.stores);
     const [username, setUsername] = useState(storesContextDataDefault.username);
     const [auth, setAuth] = useState(storesContextDataDefault.auth);
+    const [test, setTest] = useState<IStores[]>(storesContextDataDefault.test);
+    //let tam:any = null;
 
     useEffect(() => {
         setStores(store);
         setAuth(false);
         setUsername('');
+        getAllStores();
+        // tam = test;
     }, [])
     //console.log(stores);
+
+    const getAllStores = () => {
+        axios.get(`http://localhost:4000/items`)
+        .then((response) => {
+            // console.log(response.data);
+            setTest(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
 
     const Login = (email: string, password: string) => {
         //console.log(email, password);
@@ -61,6 +82,8 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
         setUsername('');
     }
     //console.log(username);
+    // console.log();
+    
     
 
     const StoresContextData = {
@@ -68,7 +91,8 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
         Login,
         Logout,
         auth,
-        username
+        username,
+        test
     }
 
     return (

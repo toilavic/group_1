@@ -1,13 +1,26 @@
 import { RestaurantMenu, StarRounded } from "@mui/icons-material";
 import { Button, Card, CardContent, CardHeader, Typography } from "@mui/material";
 import { useState } from "react";
-import ReactMapGL, { Marker, Popup } from "react-map-gl";
+import ReactMapGL, { FullscreenControl, GeolocateControl, Marker, NavigationControl, Popup } from "react-map-gl";
 import interfaceStore from "../../data/stores/interfaceStore";
 import IStore from "../../data/stores/IStores";
 
 interface Props {
     stores: IStore[];
 }
+
+const fullscreenControlStyle = {
+    right: 10,
+    top: 10
+  }
+  const navControlStyle= {
+    right: 10,
+    top: 40
+  };
+  const geolocateControlStyle= {
+    right: 10,
+    top: 130
+  };
 
 const Showmap: React.FC<Props> = ({ stores }) => {
     const MAPBOX_TOKEN = "pk.eyJ1IjoiYnJvdGhlcmQiLCJhIjoiY2t2NnYyeTN6MWc2ejJubzA3dmE1ajdsYSJ9.D2EEYvFB43G4_0JQYJn63w";
@@ -35,7 +48,14 @@ const Showmap: React.FC<Props> = ({ stores }) => {
                 setViewport(viewport)
             }}
             mapStyle="mapbox://styles/mapbox/streets-v11"
-            > kakkaka
+            >kakkaka
+            <FullscreenControl style={fullscreenControlStyle} />
+            <NavigationControl style={navControlStyle} />
+            <GeolocateControl style={geolocateControlStyle}
+                positionOptions={{enableHighAccuracy: true}}
+                trackUserLocation={true}
+                auto
+            />
                 {/* {stores.map((store: any) => {
                     return (
                         <Marker key={store.id} latitude={store.lat} longitude={store.long}>

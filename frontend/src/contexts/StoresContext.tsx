@@ -3,19 +3,21 @@ import interfaceStore from "../data/stores/interfaceStore";
 import store from "../data/stores/stores";
 import users from "../data/users/users"
 import axios from "axios";
-import IStores from "../data/stores/IStores"
+import IStores from "../data/stores/IStores";
+import GetAllStores from "../api/GetAllStores";
 
 interface StoreContextProps{
     children: ReactNode
 }
 
 export interface StoresContextDefault{
-    stores: interfaceStore[],
+    //stores: interfaceStore[],
+    stores: IStores[],
     Login: (email: string, password: string) => void,
     Logout: () => void,
     auth: Boolean,
     username: string,
-    test: IStores[]
+    //test: IStores[]
 }
 
 const storesContextDataDefault = {
@@ -24,7 +26,7 @@ const storesContextDataDefault = {
     Logout: () => {},
     auth: false,
     username: '',
-    test: [],
+    //test: [],
 }
 
 
@@ -34,26 +36,28 @@ export const StoresContext = createContext<StoresContextDefault>(
 );
 
 const StoresContextProvider = ({children} : StoreContextProps) => {
-    const [stores, setStores] = useState<interfaceStore[]>(storesContextDataDefault.stores);
+    const [stores, setStores] = useState<IStores[]>(storesContextDataDefault.stores);
     const [username, setUsername] = useState(storesContextDataDefault.username);
     const [auth, setAuth] = useState(storesContextDataDefault.auth);
-    const [test, setTest] = useState<IStores[]>(storesContextDataDefault.test);
+    //const [test, setTest] = useState<IStores[]>(storesContextDataDefault.test);
     //let tam:any = null;
 
     useEffect(() => {
-        setStores(store);
+        //setStores(store);
         setAuth(false);
         setUsername('');
         getAllStores();
         // tam = test;
     }, [])
-    //console.log(stores);
+    //console.log(typeof(stores));
 
     const getAllStores = () => {
-        axios.get(`http://localhost:4000/items`)
+        //axios.get(`http://localhost:4000/items`)
+        GetAllStores()
         .then((response) => {
-            // console.log(response.data);
-            setTest(response.data);
+            //console.log(response);
+            setStores(response);
+            //setTest(response);
         })
         .catch((error) => {
             console.log(error);
@@ -92,7 +96,7 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
         Logout,
         auth,
         username,
-        test
+        //test
     }
 
     return (

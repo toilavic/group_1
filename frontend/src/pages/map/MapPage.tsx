@@ -17,7 +17,7 @@ import Showmap from "../../components/showmap/Showmap";
 import { StoresContext } from "../../contexts/StoresContext";
 
 const MapPage = () => {
-    const { stores, auth, username, Logout, test } = useContext(StoresContext);
+    const { stores, auth, username, Logout } = useContext(StoresContext);
     //console.log("print stores in MapPage: ", stores);
     //console.log(test);
     
@@ -71,10 +71,10 @@ const MapPage = () => {
                   <Typography>Address: {store.address}</Typography>
                   <Typography><Star /> {store.rate}</Typography>
                   <Typography>Price: {store.price}</Typography>
-                  <Typography>Open Time: {store.openTime}</Typography>
-                  <Typography>Puh: {store.contactNumber}</Typography>
+                  <Typography>Open Time: {store.opentime}</Typography>
+                  <Typography>Puh: {store.contact_number}</Typography>
                   <Typography>Description: {store.description}</Typography>
-                  <Typography>Discount: {store.discountRate}</Typography>
+                  <Typography>Discount: {store.discount_rate}</Typography>
                 </Paper>
               </Grid>
               );
@@ -82,26 +82,7 @@ const MapPage = () => {
             </Grid>
           </Grid>
           <Grid item xs={5}>
-            <Showmap stores = {stores} test = {test} />
-          </Grid>
-        </Grid>
-      </Box>
-      <Box>
-        <Grid container>
-          <Grid item xs={12}>
-            <Grid>
-            {test.map((tam) => {
-              return (
-                <Grid item key={tam.id}>
-                <Paper>
-                  <Typography>{tam.address}</Typography>
-                  <Typography>{tam.location.coordinates[0]}</Typography>
-                  <Typography>{tam.location.coordinates[1]}</Typography>
-                </Paper>
-                </Grid>
-              )
-            })}
-            </Grid>
+            <Showmap stores = {stores}/>
           </Grid>
         </Grid>
       </Box>

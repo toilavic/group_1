@@ -6,11 +6,10 @@ import interfaceStore from "../../data/stores/interfaceStore";
 import IStore from "../../data/stores/IStores";
 
 interface Props {
-    stores: interfaceStore[];
-    test: IStore[];
+    stores: IStore[];
 }
 
-const Showmap: React.FC<Props> = ({ stores, test }) => {
+const Showmap: React.FC<Props> = ({ stores }) => {
     const MAPBOX_TOKEN = "pk.eyJ1IjoiYnJvdGhlcmQiLCJhIjoiY2t2NnYyeTN6MWc2ejJubzA3dmE1ajdsYSJ9.D2EEYvFB43G4_0JQYJn63w";
 
     const [viewport, setViewport] = useState({
@@ -21,11 +20,13 @@ const Showmap: React.FC<Props> = ({ stores, test }) => {
 
     const [selectedRestaurant, setSelectedRestaurant]:any = useState(null);
     // console.log(selectedRestaurant);
-    console.log(test);
+    //console.log(typeof(stores));
+    //console.log(stores);
+    
     
     return (
         <div>
-            {/* <ReactMapGL
+            <ReactMapGL
             {...viewport}
             mapboxApiAccessToken={MAPBOX_TOKEN}
             height = {650}
@@ -34,8 +35,8 @@ const Showmap: React.FC<Props> = ({ stores, test }) => {
                 setViewport(viewport)
             }}
             mapStyle="mapbox://styles/mapbox/streets-v11"
-            >
-                {stores.map((store: any) => {
+            > kakkaka
+                {/* {stores.map((store: any) => {
                     return (
                         <Marker key={store.id} latitude={store.lat} longitude={store.long}>
                             <Button variant="text"
@@ -48,8 +49,8 @@ const Showmap: React.FC<Props> = ({ stores, test }) => {
                             </Button>
                         </Marker>
                     );
-                })}
-                {selectedRestaurant ? (
+                })} */}
+                {/* {selectedRestaurant ? (
                     <Popup latitude={selectedRestaurant.lat} longitude={selectedRestaurant.long}
                     onClose={()=>{setSelectedRestaurant(null)}}
                     >
@@ -62,9 +63,11 @@ const Showmap: React.FC<Props> = ({ stores, test }) => {
                             </CardContent>
                         </Card>
                     </Popup>
-                ) : null}
-            </ReactMapGL> */}
+                ) : null} */}
+            </ReactMapGL>
 
+
+            {/*
             <ReactMapGL
             {...viewport}
             mapboxApiAccessToken={MAPBOX_TOKEN}
@@ -104,6 +107,7 @@ const Showmap: React.FC<Props> = ({ stores, test }) => {
                     </Popup>
                 ) : null}
             </ReactMapGL>
+            */}
 
         </div>
     )

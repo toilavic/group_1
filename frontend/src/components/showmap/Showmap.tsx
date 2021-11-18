@@ -43,7 +43,7 @@ const Showmap: React.FC<Props> = ({ stores }) => {
             {...viewport}
             mapboxApiAccessToken={MAPBOX_TOKEN}
             height = {650}
-            width = {1200}
+            width = {600}
             onViewportChange={(viewport:any)=>{
                 setViewport(viewport)
             }}
@@ -56,55 +56,13 @@ const Showmap: React.FC<Props> = ({ stores }) => {
                 trackUserLocation={true}
                 auto
             />
-                {/* {stores.map((store: any) => {
+                {stores.map((store: any) => {
                     return (
-                        <Marker key={store.id} latitude={store.lat} longitude={store.long}>
+                        <Marker key={store.id} latitude={store.location.coordinates[1]} longitude={store.location.coordinates[0]}>
                             <Button variant="text"
                             onClick={(event) => {
                                 event.preventDefault();
                                 setSelectedRestaurant(store);
-                            }}
-                            >
-                                <RestaurantMenu color="error" fontSize="large"/>
-                            </Button>
-                        </Marker>
-                    );
-                })} */}
-                {/* {selectedRestaurant ? (
-                    <Popup latitude={selectedRestaurant.lat} longitude={selectedRestaurant.long}
-                    onClose={()=>{setSelectedRestaurant(null)}}
-                    >
-                        <Card elevation={0} >
-                            <CardHeader title={selectedRestaurant.name} />
-                            <CardContent>
-                                <Typography>{selectedRestaurant.address}</Typography>
-                                <StarRounded color="warning" fontSize="large" />
-                                <Typography>{selectedRestaurant.price}</Typography>
-                            </CardContent>
-                        </Card>
-                    </Popup>
-                ) : null} */}
-            </ReactMapGL>
-
-
-            {/*
-            <ReactMapGL
-            {...viewport}
-            mapboxApiAccessToken={MAPBOX_TOKEN}
-            height = {650}
-            width = {1200}
-            onViewportChange={(viewport:any)=>{
-                setViewport(viewport)
-            }}
-            mapStyle="mapbox://styles/mapbox/streets-v11"
-            >
-                {test.map((tam: any) => {
-                    return (
-                        <Marker key={tam.id} latitude={tam.location.coordinates[1]} longitude={tam.location.coordinates[0]}>
-                            <Button variant="text"
-                            onClick={(event) => {
-                                event.preventDefault();
-                                setSelectedRestaurant(tam);
                             }}
                             >
                                 <RestaurantMenu color="error" fontSize="large"/>
@@ -127,8 +85,6 @@ const Showmap: React.FC<Props> = ({ stores }) => {
                     </Popup>
                 ) : null}
             </ReactMapGL>
-            */}
-
         </div>
     )
 }

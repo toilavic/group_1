@@ -31,11 +31,7 @@ const Showmap: React.FC<Props> = ({ stores }) => {
         zoom: 12,
     });
 
-    const [selectedRestaurant, setSelectedRestaurant]:any = useState(null);
-    // console.log(selectedRestaurant);
-    //console.log(typeof(stores));
-    //console.log(stores);
-    
+    const [selectedStore, setSelectedStore]:any = useState(null);
     
     return (
         <div>
@@ -62,7 +58,7 @@ const Showmap: React.FC<Props> = ({ stores }) => {
                             <Button variant="text"
                             onClick={(event) => {
                                 event.preventDefault();
-                                setSelectedRestaurant(store);
+                                setSelectedStore(store);
                             }}
                             >
                                 <RestaurantMenu color="error" fontSize="large"/>
@@ -70,16 +66,16 @@ const Showmap: React.FC<Props> = ({ stores }) => {
                         </Marker>
                     );
                 })}
-                {selectedRestaurant ? (
-                    <Popup latitude={selectedRestaurant.location.coordinates[1]} longitude={selectedRestaurant.location.coordinates[0]}
-                    onClose={()=>{setSelectedRestaurant(null)}}
+                {selectedStore ? (
+                    <Popup latitude={selectedStore.location.coordinates[1]} longitude={selectedStore.location.coordinates[0]}
+                    onClose={()=>{setSelectedStore(null)}}
                     >
                         <Card elevation={0} >
-                            <CardHeader title={selectedRestaurant.name} />
+                            <CardHeader title={selectedStore.name} />
                             <CardContent>
-                                <Typography>{selectedRestaurant.address}</Typography>
+                                <Typography>{selectedStore.address}</Typography>
                                 <StarRounded color="warning" fontSize="large" />
-                                <Typography>{selectedRestaurant.price}</Typography>
+                                <Typography>{selectedStore.price}</Typography>
                             </CardContent>
                         </Card>
                     </Popup>

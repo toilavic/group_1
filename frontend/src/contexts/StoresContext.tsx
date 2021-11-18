@@ -1,10 +1,8 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
-import interfaceStore from "../data/stores/interfaceStore";
-import store from "../data/stores/stores";
 import users from "../data/users/users"
-import axios from "axios";
 import IStores from "../data/stores/IStores";
 import GetAllStores from "../api/GetAllStores";
+import PostRegister from "../api/PostRegister";
 
 interface StoreContextProps{
     children: ReactNode
@@ -13,6 +11,7 @@ interface StoreContextProps{
 export interface StoresContextDefault{
     //stores: interfaceStore[],
     stores: IStores[],
+    Register: (username: string, name: string, passwordHash: string) => void,
     Login: (email: string, password: string) => void,
     Logout: () => void,
     auth: Boolean,
@@ -22,6 +21,7 @@ export interface StoresContextDefault{
 
 const storesContextDataDefault = {
     stores: [],
+    Register: () => {},
     Login: () => {},
     Logout: () => {},
     auth: false,
@@ -64,6 +64,11 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
         })
     }
 
+    const Register = (username: string, name: string, passwordHash: string) => {
+        //console.log("username: ", username, " name: ", name," passwordHash: ",passwordHash);
+        PostRegister(username,name,passwordHash)
+    }
+
     const Login = (email: string, password: string) => {
         //console.log(email, password);
         let UserFind = users.find(user => user.email === email);
@@ -92,6 +97,7 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
 
     const StoresContextData = {
         stores,
+        Register,
         Login,
         Logout,
         auth,

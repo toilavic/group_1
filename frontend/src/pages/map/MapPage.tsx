@@ -62,14 +62,14 @@ const MapPage = () => {
       </Box>
       <Box>
         <Grid container>
-          <Grid item xs={7}>
+          <Grid item xs={5}>
             <Grid container>
               { stores.map( (store ) => {
               return (
               <Grid item key={store.id} >
                 <Paper elevation={3} className={classes.paperMap}>
                   <Typography>Address: {store.address}</Typography>
-                  <Typography><Star /> {store.rate}</Typography>
+                  <Typography><Star /><span>{store.rate}</span></Typography>
                   <Typography>Price: {store.price}</Typography>
                   <Typography>Open Time: {store.opentime}</Typography>
                   <Typography>Puh: {store.contact_number}</Typography>
@@ -81,7 +81,7 @@ const MapPage = () => {
             })}
             </Grid>
           </Grid>
-          <Grid item xs={5}>
+          <Grid item xs={7}>
             <Showmap stores = {stores}/>
           </Grid>
         </Grid>
@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme: any) => ({
   },
   paperMap: {
       width: 250,
-      height: 300,
+      height: 580,
       margin: 5,
       padding: 5,
       cursor: "pointer"

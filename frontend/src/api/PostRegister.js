@@ -8,7 +8,7 @@ const PostRegister = (username, name, passwordHash) => {
       name,
       passwordHash,
     })
-    .then((response) => response)
+    .then((response) => response.data)
     .catch((error) => console.log(error));
 };
 

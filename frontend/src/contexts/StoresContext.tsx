@@ -1,8 +1,7 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
-import users from "../data/users/users"
 import IStores from "../data/stores/IStores";
 import GetAllStores from "../api/GetAllStores";
-import PostRegister from "../api/PostRegister";
+import PostLogin from "../api/PostLogin";
 
 interface StoreContextProps{
     children: ReactNode
@@ -10,7 +9,6 @@ interface StoreContextProps{
 
 export interface StoresContextDefault{
     stores: IStores[],
-    Register: (username: string, name: string, passwordHash: string) => void,
     Login: (email: string, password: string) => void,
     Logout: () => void,
     auth: Boolean,
@@ -19,7 +17,6 @@ export interface StoresContextDefault{
 
 const storesContextDataDefault = {
     stores: [],
-    Register: () => {},
     Login: () => {},
     Logout: () => {},
     auth: false,
@@ -53,36 +50,28 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
         })
     }
 
-    const Register = (username: string, name: string, passwordHash: string) => {
-        PostRegister(username,name,passwordHash)
-    }
-
-    const Login = (email: string, password: string) => {
-        let UserFind = users.find(user => user.email === email);
-        if (UserFind) {
-            let PasswordFind = UserFind.password === password;
-            if (PasswordFind) {
-                setUsername(email);
-                setAuth(true);
-                console.log("login successful!");
-            } else {
-                console.log("password is not matched!");
+    const Login = (username: string, password: string) => {
+        PostLogin(username,password)
+        .then(response => {
+            if(response) {
+                localStorage.setItem("token", response)
+                console.log(localStorage.getItem("token"));
+                if(localStorage.getItem("token")) {
+                    setAuth(true)
+                }
             }
-        } else {
-            console.log("Email is not exist");
-        }
+        })
+        .catch((error) => console.log(error)
+        )
     };
 
     const Logout = () => {
+        localStorage.removeItem("token");
         setAuth(false);
-        setUsername('');
     }
-    
-    
 
     const StoresContextData = {
         stores,
-        Register,
         Login,
         Logout,
         auth,

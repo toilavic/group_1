@@ -26,7 +26,7 @@ const Login = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {auth ? <Redirect to="/map" /> : (
+      {!auth ? (
         <Container maxWidth="xs">
         <CssBaseline />
         <Box
@@ -80,7 +80,8 @@ const Login = () => {
           </Box>
         </Box>
       </Container>
-      )}
+      ) : <Redirect to="/map" />
+    }
     </ThemeProvider>
   );
 };

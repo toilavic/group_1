@@ -9,14 +9,12 @@ interface StoreContextProps{
 }
 
 export interface StoresContextDefault{
-    //stores: interfaceStore[],
     stores: IStores[],
     Register: (username: string, name: string, passwordHash: string) => void,
     Login: (email: string, password: string) => void,
     Logout: () => void,
     auth: Boolean,
     username: string,
-    //test: IStores[]
 }
 
 const storesContextDataDefault = {
@@ -26,7 +24,6 @@ const storesContextDataDefault = {
     Logout: () => {},
     auth: false,
     username: '',
-    //test: [],
 }
 
 
@@ -39,25 +36,17 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
     const [stores, setStores] = useState<IStores[]>(storesContextDataDefault.stores);
     const [username, setUsername] = useState(storesContextDataDefault.username);
     const [auth, setAuth] = useState(storesContextDataDefault.auth);
-    //const [test, setTest] = useState<IStores[]>(storesContextDataDefault.test);
-    //let tam:any = null;
 
     useEffect(() => {
-        //setStores(store);
         setAuth(false);
         setUsername('');
         getAllStores();
-        // tam = test;
     }, [])
-    //console.log(typeof(stores));
 
     const getAllStores = () => {
-        //axios.get(`http://localhost:4000/items`)
         GetAllStores()
         .then((response) => {
-            //console.log(response);
             setStores(response);
-            //setTest(response);
         })
         .catch((error) => {
             console.log(error);
@@ -65,12 +54,10 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
     }
 
     const Register = (username: string, name: string, passwordHash: string) => {
-        //console.log("username: ", username, " name: ", name," passwordHash: ",passwordHash);
         PostRegister(username,name,passwordHash)
     }
 
     const Login = (email: string, password: string) => {
-        //console.log(email, password);
         let UserFind = users.find(user => user.email === email);
         if (UserFind) {
             let PasswordFind = UserFind.password === password;
@@ -90,8 +77,6 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
         setAuth(false);
         setUsername('');
     }
-    //console.log(username);
-    // console.log();
     
     
 
@@ -102,7 +87,6 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
         Logout,
         auth,
         username,
-        //test
     }
 
     return (

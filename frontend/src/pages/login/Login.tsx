@@ -14,14 +14,14 @@ import { StoresContext } from "../../contexts/StoresContext";
 
 const Login = () => {
   const {Login, auth} = useContext(StoresContext)
-  const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const handleSubmit = (event: ChangeEvent<HTMLInputElement>) => {
     //console.log("email: ", email, "password: ", password);
     //Login(email,password);
     //console.log(email, password);
-    Login(email, password);
+    Login(username, password);
     event.preventDefault();
   };
 
@@ -48,9 +48,9 @@ const Login = () => {
               required
               fullWidth
               margin="normal"
-              label="Email Address"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              label="Username"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
             />
             <TextField
               required

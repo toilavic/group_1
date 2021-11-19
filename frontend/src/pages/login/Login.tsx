@@ -18,9 +18,6 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
 
   const handleSubmit = (event: ChangeEvent<HTMLInputElement>) => {
-    //console.log("email: ", email, "password: ", password);
-    //Login(email,password);
-    //console.log(email, password);
     Login(username, password);
     event.preventDefault();
   };

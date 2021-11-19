@@ -8,21 +8,27 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { ChangeEvent, FC, useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import { StoresContext } from "../../contexts/StoresContext";
+import { ChangeEvent, FC, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import PostRegister from "../../api/PostRegister";
 
 const theme = createTheme();
 
 const Register: FC = () => {
-  const {Register} = useContext(StoresContext);
 
+    let history = useHistory();
     const [username, setUsername] = useState<string>("")
     const [name, setName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
     const handleRegister = (event:ChangeEvent<HTMLInputElement>) => {
-        Register(username, name, password);
+        PostRegister(username,name,password)
+        .then(response => {
+          console.log(response);
+          if(response) {
+            history.push("/login")
+          }
+        })
         event.preventDefault();
     };
 

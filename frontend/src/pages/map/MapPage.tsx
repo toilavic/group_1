@@ -17,10 +17,7 @@ import Showmap from "../../components/showmap/Showmap";
 import { StoresContext } from "../../contexts/StoresContext";
 
 const MapPage = () => {
-    const { stores, auth, username, Logout } = useContext(StoresContext);
-    //console.log("print stores in MapPage: ", stores);
-    //console.log(test);
-    
+    const { stores, username, Logout, auth } = useContext(StoresContext);
 
   const classes = useStyles();
 

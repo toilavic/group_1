@@ -27,8 +27,11 @@ jobs:
       - name: USE NODEJS ${{ matrix.node-version }} - ${{ matrix.architecture }}
         uses: actions/setup-node@v2
 
-      - name: INSTALL PROJECT DEPENDENCIES (YARN)
+      - name: INSTALL PROJECT DEPENDENCIES (NPM)
         run: npm install
+        
+      - name: RUN PROJECT
+        run: nodemon index.js
 
       #- name: UNIT TEST (JEST)
        # run: npm test

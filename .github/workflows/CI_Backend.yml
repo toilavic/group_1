@@ -29,9 +29,6 @@ jobs:
 
       - name: INSTALL PROJECT DEPENDENCIES (NPM)
         run: npm install
-        
-      - name: RUN PROJECT
-        run: node index.js
 
       #- name: UNIT TEST (JEST)
        # run: npm test

@@ -1,12 +1,6 @@
-import { RestaurantMenu, StarRounded } from "@mui/icons-material";
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Typography,
-} from "@mui/material";
+
 import { useState } from "react";
+
 import ReactMapGL, {
   FullscreenControl,
   GeolocateControl,
@@ -14,7 +8,19 @@ import ReactMapGL, {
   NavigationControl,
   Popup,
 } from "react-map-gl";
-import IStore from "../../data/stores/IStores";
+
+import IStore from "../../contexts/IStores";
+import { useContext } from "react";
+import { StoresContext } from "../../contexts/StoresContext";
+
+import styles from './Showmap.module.css'
+import {
+  Card,
+  CardContent,
+  CardMedia
+} from "@mui/material";
+
+import { DEFAULT_STORE_URL } from "../../utils/variables";
 import constants from "../../constants.json";
 
 interface Props {
@@ -35,12 +41,13 @@ const geolocateControlStyle = {
 };
 
 const Showmap: React.FC<Props> = ({ stores }) => {
+
   const [viewport, setViewport] = useState({
     latitude: 65.0118734,
     longitude: 25.4716809,
     zoom: 12,
   });
-
+  const { getRateColor } = useContext(StoresContext);
   const [selectedStore, setSelectedStore]: any = useState(null);
 
   return (
@@ -60,7 +67,6 @@ const Showmap: React.FC<Props> = ({ stores }) => {
         <GeolocateControl
           style={geolocateControlStyle}
           positionOptions={{ enableHighAccuracy: true }}
-          trackUserLocation={true}
           auto
         />
         {stores.map((store: any) => {
@@ -70,15 +76,12 @@ const Showmap: React.FC<Props> = ({ stores }) => {
               latitude={store.location.coordinates[1]}
               longitude={store.location.coordinates[0]}
             >
-              <Button
-                variant="text"
-                onClick={(event) => {
+              <button className={styles.marketPrice} onClick={(event) => {
                   event.preventDefault();
                   setSelectedStore(store);
-                }}
-              >
-                <RestaurantMenu color="error" fontSize="large" />
-              </Button>
+                }}>
+                  {store.price} €
+              </button>
             </Marker>
           );
         })}
@@ -90,14 +93,22 @@ const Showmap: React.FC<Props> = ({ stores }) => {
               setSelectedStore(null);
             }}
           >
-            <Card elevation={0}>
-              <CardHeader title={selectedStore.name} />
-              <CardContent>
-                <Typography>{selectedStore.address}</Typography>
-                <StarRounded color="warning" fontSize="large" />
-                <Typography>{selectedStore.price}</Typography>
-              </CardContent>
-            </Card>
+            <Card style = {{boxShadow: 'none', maxHeight: 345}}>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={DEFAULT_STORE_URL}
+                    alt="green iguana"
+                  />
+                  <CardContent>
+                    <h2>{selectedStore?.name}</h2>
+                    <h3>{selectedStore?.address}</h3>
+                    <h3 style = {{color: getRateColor(selectedStore?.rate)}}>{3} ★ {` (14)`}</h3>
+                    <h3>€ {selectedStore?.price}</h3>
+                    <h3>Open from: 10:00 AM
+                    </h3>
+                  </CardContent>
+              </Card>
           </Popup>
         ) : null}
       </ReactMapGL>

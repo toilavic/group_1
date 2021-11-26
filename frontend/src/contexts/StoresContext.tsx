@@ -1,68 +1,63 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
-import IStores from "../data/stores/IStores";
-import GetAllStores from "../api/GetAllStores";
-import PostLogin from "../api/PostLogin";
+import { createContext, ReactNode, useEffect, useState }        from "react";
 
-interface StoreContextProps{
+import IStores                                                  from "./IStores";
+
+import APIGetAllStores                                          from "../api/APIGetAllStores";
+import APILogin                                                 from "../api/APILogin";
+interface StoreContextProps {
     children: ReactNode
 }
-
-export interface StoresContextDefault{
+export interface StoresContextDefault {
     stores: IStores[],
-    Login: (email: string, password: string) => void,
-    Logout: () => void,
     auth: Boolean,
-    username: string,
+    username: String,
+    Login: (email: String, password: String) => void,
+    Logout: () => void,
+    getRateColor: (rate: Number) => any,
+    getAvgRate: (Number: Array<number>) => Number,
+    getDeductedPrice: (price: number, discount: number) => number
 }
 
 const storesContextDataDefault = {
     stores: [],
-    Login: () => {},
-    Logout: () => {},
     auth: false,
     username: '',
+    Login: () => { },
+    Logout: () => { },
+    getRateColor: () => '',
+    getAvgRate: () => 0,
+    getDeductedPrice: () => 0
 }
-
-
 
 export const StoresContext = createContext<StoresContextDefault>(
     storesContextDataDefault
 );
 
-const StoresContextProvider = ({children} : StoreContextProps) => {
+const StoresContextProvider = ({ children }: StoreContextProps) => {
     const [stores, setStores] = useState<IStores[]>(storesContextDataDefault.stores);
     const [username, setUsername] = useState(storesContextDataDefault.username);
     const [auth, setAuth] = useState(storesContextDataDefault.auth);
 
-    useEffect(() => {
-        setAuth(false);
-        setUsername('');
-        getAllStores();
-    }, [])
-
-    const getAllStores = () => {
-        GetAllStores()
-        .then((response) => {
-            if (response) setStores(response);
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+    async function _getAllStore() {
+        const _stores = APIGetAllStores()
+        if (_stores) setStores(await _stores)
     }
 
-    const Login = (username: string, password: string) => {
-        PostLogin(username,password)
-        .then(response => {
-            if(response) {
-                localStorage.setItem("token", response)
-                console.log(localStorage.getItem("token"));
-                if(localStorage.getItem("token")) {
-                    setAuth(true)
-                }
-            }
-        })
-        .catch((error) => console.log(error)
-        )
+    useEffect(() => {
+        _getAllStore();
+    }, [])
+
+    const Login = (username: String, password: String) => {
+        APILogin(username, password)
+            .then(response => {
+                if(!response) alert('Something went wrong !')
+                else console.log(response)
+                // const _token = response
+                // if (_token) {
+                //     localStorage.setItem("token", _token)
+                //     setAuth(true)
+                // }
+            })
     };
 
     const Logout = () => {
@@ -70,16 +65,28 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
         setAuth(false);
     }
 
+    function getRateColor (rate: Number) {
+        if (rate >= 4) return 'green'
+        else if (rate >= 2.5 || rate < 4) return 'orange'
+        else return 'red'
+    }
+
+    const getAvgRate = (arrRate: Array<number>) => Math.round((arrRate.reduce((prev: number, curr: number) => prev + curr) / arrRate.length)* 10) / 10;
+    const getDeductedPrice = (price: number, discount: number) => Math.round((price*(100-discount)/100)*1)/1;
+
     const StoresContextData = {
         stores,
-        Login,
-        Logout,
         auth,
         username,
+        Login,
+        Logout,
+        getRateColor,
+        getAvgRate,
+        getDeductedPrice
     }
 
     return (
-        <StoresContext.Provider value={ StoresContextData }>
+        <StoresContext.Provider value={StoresContextData}>
             {children}
         </StoresContext.Provider>
     )

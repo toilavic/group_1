@@ -1,41 +1,63 @@
 import { makeStyles } from "@material-ui/core";
-import { Star } from "@mui/icons-material";
 import {
   Grid,
-  Paper,
-  Typography,
+  Card,
+  CardContent,
+  CardMedia,
+  Box
 } from "@mui/material";
+import { CardActionArea } from '@mui/material';
+
 import { useContext } from "react";
 import { StoresContext } from "../../../contexts/StoresContext";
 
 const MapLeft = () => {
 
-  const { stores } = useContext(StoresContext);
+  const { stores, getRateColor, getAvgRate, getDeductedPrice } = useContext(StoresContext);
   const classes = useStyles();
-  const totalStores = stores.length
+  const totalStores = stores.length || 0
+  console.log(stores)
+
+  const DEFAULT_STORE_URL = "https://i.pinimg.com/originals/70/88/36/708836ce6b5cd801c2b33fc4f3feb476.jpg"
+
   return (
     <>
       <h2>Select between {totalStores} barber shops in the area</h2>
       <h3>Here would be sort and filter</h3>
       {/* style here just for example */}
-      <Grid container style = {{backgroundColor: 'blue', height: '75vh'}}>
-        <h3>Stores</h3>
-        {stores.map((store) => {
-          return (
-            <Grid item key={store.id} >
-              <Paper elevation={3} className={classes.paperMap}>
-                <Typography>Address: {store?.address}</Typography>
-                <Typography><Star /><span>{store?.rate}</span></Typography>
-                <Typography>Price: {store?.price}</Typography>
-                <Typography>Open Time: {store?.opentime}</Typography>
-                <Typography>Puh: {store?.contact_number}</Typography>
-                <Typography>Description: {store?.description}</Typography>
-                <Typography>Discount: {store?.discount_rate}</Typography>
-              </Paper>
-            </Grid>
-          );
-        })}
-      </Grid>
+      <Box style={{ maxHeight: '81vh', maxWidth: '100wh', overflow: 'auto' }}>
+        <Grid container style={{ alignItems: 'space-between', justifyContent: 'center' }} >
+          {stores.map((store: any) => {
+            return (
+              <Card sx={{ maxWidth: 345 }} className={classes.paperMap} key = {store?.id}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={DEFAULT_STORE_URL}
+                    alt="green iguana"
+                  />
+                  <CardContent>
+                    <h2>{store?.name} &nbsp;
+                    <span style={{color: 'red'}}>{store?.discount_rate ? `-${store?.discount_rate}%` : ''}</span>
+                    </h2>
+                    <h3>{store?.address}</h3>
+                    <h3 style = {{color: getRateColor(getAvgRate(store?.rate))} || 'green'}>{getAvgRate(store?.rate) || 0} ★ {` (${store?.rate.length || 0})`}</h3>
+                    <h3>{
+                    store?.discount_rate > 0 ? 
+                    `From ${store?.price}€  => ${getDeductedPrice(store?.price, store?.discount_rate)}€` :
+                    ''}
+                    </h3>
+                    <h3>Open from: 10:00 AM
+                      {/* {store?.opentime} */}
+                    </h3>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            );
+          })}
+        </Grid>
+      </Box>
     </>
 
   );
@@ -43,8 +65,7 @@ const MapLeft = () => {
 
 const useStyles = makeStyles((theme: any) => ({
   paperMap: {
-    width: 250,
-    height: 580,
+    width: 310,
     margin: 5,
     padding: 5,
     cursor: "pointer"

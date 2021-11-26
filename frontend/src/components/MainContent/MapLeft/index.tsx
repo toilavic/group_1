@@ -45,8 +45,8 @@ const MapLeft = () => {
                     <h3 style = {{color: getRateColor(getAvgRate(store?.rate))} || 'green'}>{getAvgRate(store?.rate) || 0} ★ {` (${store?.rate.length || 0})`}</h3>
                     <h3>{
                     store?.discount_rate > 0 ? 
-                    `From ${store?.price}€  => ${getDeductedPrice(store?.price, store?.discount_rate)}€` :
-                    ''}
+                    `Original ${store?.price}€  => ${getDeductedPrice(store?.price, store?.discount_rate)}€` :
+                    `${store?.price}€`}
                     </h3>
                     <h3>Open from: 10:00 AM
                       {/* {store?.opentime} */}

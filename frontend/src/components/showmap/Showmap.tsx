@@ -106,8 +106,9 @@ const Showmap: React.FC<Props> = ({ stores }) => {
                     <h3 style = {{color: getRateColor(getAvgRate(selectedStore?.rate))} || 'green'}>{getAvgRate(selectedStore?.rate) || 0} ★ {` (${selectedStore?.rate.length || 0})`}</h3>
                     <h3>{
                     selectedStore?.discount_rate > 0 ? 
-                    `From ${selectedStore?.price}€  => ${getDeductedPrice(selectedStore?.price, selectedStore?.discount_rate)}€` :
-                    ''}
+                    `Original ${selectedStore?.price}€  => ${getDeductedPrice(selectedStore?.price, selectedStore?.discount_rate)}€` : 
+                    `${selectedStore?.price}€`
+                    }
                     </h3>
                     <h3>Open from: 10:00 AM
                     </h3>

@@ -47,7 +47,7 @@ const Showmap: React.FC<Props> = ({ stores }) => {
     longitude: 25.4716809,
     zoom: 12,
   });
-  const { getRateColor } = useContext(StoresContext);
+  const { getRateColor, getAvgRate, getDeductedPrice } = useContext(StoresContext);
   const [selectedStore, setSelectedStore]: any = useState(null);
 
   return (
@@ -103,8 +103,12 @@ const Showmap: React.FC<Props> = ({ stores }) => {
                   <CardContent>
                     <h2>{selectedStore?.name}</h2>
                     <h3>{selectedStore?.address}</h3>
-                    <h3 style = {{color: getRateColor(selectedStore?.rate)}}>{3} ★ {` (14)`}</h3>
-                    <h3>€ {selectedStore?.price}</h3>
+                    <h3 style = {{color: getRateColor(getAvgRate(selectedStore?.rate))} || 'green'}>{getAvgRate(selectedStore?.rate) || 0} ★ {` (${selectedStore?.rate.length || 0})`}</h3>
+                    <h3>{
+                    selectedStore?.discount_rate > 0 ? 
+                    `From ${selectedStore?.price}€  => ${getDeductedPrice(selectedStore?.price, selectedStore?.discount_rate)}€` :
+                    ''}
+                    </h3>
                     <h3>Open from: 10:00 AM
                     </h3>
                   </CardContent>

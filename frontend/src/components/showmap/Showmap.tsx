@@ -44,12 +44,12 @@ const Showmap: React.FC<Props> = ({ stores }) => {
   const [selectedStore, setSelectedStore]: any = useState(null);
 
   return (
-    <div>
+    <>
       <ReactMapGL
+        height='100%'
+        width='100%'
         {...viewport}
         mapboxApiAccessToken={constants.MAPBOX_TOKEN}
-        height={650}
-        width={600}
         onViewportChange={(viewport: any) => {
           setViewport(viewport);
         }}
@@ -101,7 +101,7 @@ const Showmap: React.FC<Props> = ({ stores }) => {
           </Popup>
         ) : null}
       </ReactMapGL>
-    </div>
+    </>
   );
 };
 

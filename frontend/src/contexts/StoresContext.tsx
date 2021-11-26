@@ -43,7 +43,7 @@ const StoresContextProvider = ({children} : StoreContextProps) => {
     const getAllStores = () => {
         GetAllStores()
         .then((response) => {
-            setStores(response);
+            if (response) setStores(response);
         })
         .catch((error) => {
             console.log(error);

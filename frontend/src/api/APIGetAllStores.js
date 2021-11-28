@@ -3,6 +3,6 @@ import axios from "axios";
 
 export default function APIGetAllStores() {
     return axios.get(constants.baseAddress + 'items')
-        .then(response => response.data)
+        .then(response => response)
         .catch((error) => console.log(error))
 }

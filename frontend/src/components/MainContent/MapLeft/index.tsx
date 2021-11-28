@@ -11,7 +11,11 @@ import { CardActionArea } from '@mui/material';
 import { useContext } from "react";
 import { StoresContext } from "../../../contexts/StoresContext";
 
-const MapLeft = () => {
+interface Props {
+  selectStore: (id: string) => any;
+}
+
+const MapLeft: React.FC<Props> = ({ selectStore }) => {
 
   const { stores, getRateColor, getAvgRate, getDeductedPrice } = useContext(StoresContext);
   const classes = useStyles();
@@ -29,7 +33,7 @@ const MapLeft = () => {
         <Grid container style={{ alignItems: 'space-between', justifyContent: 'center' }} >
           {stores.map((store: any) => {
             return (
-              <Card sx={{ maxWidth: 345 }} className={classes.paperMap} key = {store?.id}>
+              <Card sx={{ maxWidth: 345 }} className={classes.paperMap} key = {store?.id} onClick = {() => selectStore(store?.id)} >
                 <CardActionArea>
                   <CardMedia
                     component="img"

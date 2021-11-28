@@ -15,7 +15,7 @@ export interface StoresContextDefault {
     Logout: () => void,
     getRateColor: (rate: Number) => any,
     getAvgRate: (Number: Array<number>) => Number,
-    getDeductedPrice: (price: number, discount: number) => number
+    getDeductedPrice: (price: number, discount: number) => number,
 }
 
 const storesContextDataDefault = {
@@ -26,7 +26,7 @@ const storesContextDataDefault = {
     Logout: () => { },
     getRateColor: () => '',
     getAvgRate: () => 0,
-    getDeductedPrice: () => 0
+    getDeductedPrice: () => 0,
 }
 
 export const StoresContext = createContext<StoresContextDefault>(
@@ -38,13 +38,12 @@ const StoresContextProvider = ({ children }: StoreContextProps) => {
     const [username, setUsername] = useState(storesContextDataDefault.username);
     const [auth, setAuth] = useState(storesContextDataDefault.auth);
 
-    async function _getAllStore() {
-        const _stores = APIGetAllStores()
-        if (_stores) setStores(await _stores)
-    }
-
     useEffect(() => {
-        _getAllStore();
+        APIGetAllStores()
+        .then((res: any) => {
+            console.log(res)
+            if ( res.status === 200) setStores(res.data)
+        })
     }, [])
 
     const Login = (username: String, password: String) => {
@@ -67,11 +66,14 @@ const StoresContextProvider = ({ children }: StoreContextProps) => {
 
     function getRateColor (rate: Number) {
         if (rate >= 4) return 'green'
-        else if (rate >= 2.5 || rate < 4) return 'orange'
+        else if (rate >= 2.5 && rate < 4 || rate === 0) return 'orange'
         else return 'red'
     }
 
-    const getAvgRate = (arrRate: Array<number>) => Math.round((arrRate.reduce((prev: number, curr: number) => prev + curr) / arrRate.length)* 10) / 10;
+    const getAvgRate = (arrRate: Array<number>) => {
+        if (arrRate.length) return Math.round((arrRate.reduce((prev: number, curr: number) => prev + curr) / arrRate.length)* 10) / 10 ;
+        else return 0;
+    } 
     const getDeductedPrice = (price: number, discount: number) => Math.round((price*(100-discount)/100)*1)/1;
 
     const StoresContextData = {
@@ -82,7 +84,7 @@ const StoresContextProvider = ({ children }: StoreContextProps) => {
         Logout,
         getRateColor,
         getAvgRate,
-        getDeductedPrice
+        getDeductedPrice,
     }
 
     return (

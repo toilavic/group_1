@@ -39,8 +39,7 @@ app.use(express.static("docs"));
 
 
 app.get("/", (req, res) => {
-  res.status(200);
-  res.send("Hello World API!");
+  res.send("Haircut API - Group 1 - Din19SP!");
 });
 
 app.use("/items", itemsRoute);

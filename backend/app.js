@@ -65,4 +65,18 @@ app.use(async (req, res, next) => {
 app.use(middleware.unknownEndpoint); // handles unkown endpoints
 app.use(middleware.errorHandler); // handles known errors
 
+let serverInstance = null;
+
+module.exports = {
+  start: function() {
+    serverInstance = app.listen(config.PORT, () => {
+      logger.info(`Server running on port ${config.PORT}`);
+    });
+  },
+  close: function() {
+    serverInstance.close();
+  }
+};
+
 module.exports = app;
+

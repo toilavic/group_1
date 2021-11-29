@@ -39,6 +39,7 @@ app.use(express.static("docs"));
 
 
 app.get("/", (req, res) => {
+  res.status(200);
   res.send("Hello World API!");
 });
 
@@ -65,4 +66,15 @@ app.use(async (req, res, next) => {
 app.use(middleware.unknownEndpoint); // handles unkown endpoints
 app.use(middleware.errorHandler); // handles known errors
 
-module.exports = app;
+let serverInstance = null;
+
+module.exports = {
+  start: function() {
+    serverInstance = app.listen(config.PORT, () => {
+      logger.info(`Server running on port ${config.PORT}`);
+    });
+  },
+  close: function() {
+    serverInstance.close();
+  }
+};

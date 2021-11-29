@@ -77,3 +77,6 @@ module.exports = {
     serverInstance.close();
   }
 };
+
+module.exports = app;
+

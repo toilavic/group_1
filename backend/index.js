@@ -1,5 +1,4 @@
 const app = require("./app"); // the actual Express application
-// app.start();
 const http = require("http");
 const config = require("./utils/config");
 const logger = require("./utils/logger");

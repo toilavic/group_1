@@ -37,7 +37,7 @@ router.post('/register', async (req, res) => {
             message: "You have signed up successfully"
         });
     } catch (err){
-            res.status(404).send(err);
+            res.status(400).send(err);
         }
     });
 

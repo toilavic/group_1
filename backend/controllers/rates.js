@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
         const rate = await Rate.find();
         res.status(200).json(rate);
     } catch (err) {
-        res.status(404).json({ message: err });
+        res.status(400).json({ message: err });
     }
 });
 
@@ -41,7 +41,7 @@ router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), a
     try {
         res.status(200).json(saveRate);
     } catch (err) {
-        res.status(404).json({ message: err });
+        res.status(400).json({ message: err });
     }
 });
 
@@ -61,7 +61,7 @@ router.delete('/:rateId', user.allowIfLoggedin, user.grantAccess('deleteAny', 'p
         const removeRate = await Rate.remove({ _id: req.params.rateId })
         res.status(200).json(removeRate);
     } catch (err) {
-        res.status(404).json({ message: err });
+        res.status(400).json({ message: err });
     }
 });
 
@@ -75,7 +75,7 @@ router.put('/:rateId', user.allowIfLoggedin, user.grantAccess('updateAny', 'prof
             });
         res.status(200).json(updatedRate);
     } catch (err) {
-        res.status(404).json({ message: err });
+        res.status(400).json({ message: err });
     }
 });
 

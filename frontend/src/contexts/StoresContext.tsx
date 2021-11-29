@@ -42,7 +42,9 @@ const StoresContextProvider = ({ children }: StoreContextProps) => {
         APIGetAllStores()
         .then((res: any) => {
             console.log(res)
-            if ( res.status === 200) setStores(res.data)
+            if (res) {
+                if (res.status === 200) setStores(res.data)
+            } 
         })
     }, [])
 

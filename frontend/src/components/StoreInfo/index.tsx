@@ -16,12 +16,12 @@ const StoreInfo: React.FC = () => {
 
     async function _APIGetStoreByID() {
         const result = await APIGetStoreByID(id)
-        if (result.status == 200) setSelectedStore(result.data)
+        if (result)  if (result.status == 200) setSelectedStore(result.data)
     }
 
     useEffect(() => {
         _APIGetStoreByID()
-    })
+    },[])
 
     return <div className={styles.container}>
         <Box style={{ marginTop: '1rem', padding: '0 2rem' }} >

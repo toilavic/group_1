@@ -8,7 +8,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  SelectChangeEvent
+  SelectChangeEvent,
+  Skeleton
 } from "@mui/material";
 import { CardActionArea } from '@mui/material';
 
@@ -32,6 +33,7 @@ const MapLeft: React.FC<Props> = ({ selectStore }) => {
   //const [sortedRoom, setSortedRoom] = useState(1);
   //console.log(sortedRoom);
   
+  const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState("");
 
   // const handleChange = (event: SelectChangeEvent<string>) => {
@@ -97,6 +99,7 @@ const MapLeft: React.FC<Props> = ({ selectStore }) => {
           label="Age"
           onChange={(event) => setSort(event.target.value)}
           //onChange={handleChange}
+          disabled={sortedRoom.length === 0}
           >
             <MenuItem value="best">Best</MenuItem>
             <MenuItem value="cheapest">Cheapest</MenuItem>
@@ -106,7 +109,7 @@ const MapLeft: React.FC<Props> = ({ selectStore }) => {
       {/* style here just for example */}
       <Box style={{ maxHeight: '81vh', maxWidth: '100wh', overflow: 'auto' }}>
         <Grid container style={{ alignItems: 'space-between', justifyContent: 'center' }} >
-          {sortedRoom.map((store: any) => {
+          {sortedRoom ? ( sortedRoom.map((store: any) => {
             return (
               <Card sx={{ maxWidth: 345 }} className={classes.paperMap} key = {store?.id} onClick = {() => selectStore(store?.id)} >
                 <CardActionArea>
@@ -134,7 +137,26 @@ const MapLeft: React.FC<Props> = ({ selectStore }) => {
                 </CardActionArea>
               </Card>
             );
-          })}
+          })
+  ) : (
+    Array.from(new Array(5)).map((store: any) => {
+      return (
+        <Card sx={{ maxWidth: 345 }} className={classes.paperMap} key = {store?.id} onClick = {() => selectStore(store?.id)} >
+          <CardActionArea>
+            <Skeleton variant="rectangular" width={310} height={118} />
+            <CardContent>
+              <Skeleton height={30} />
+              <Skeleton width={230} height={20} />
+              <Skeleton width={200} height={18} />
+              <Skeleton width={170} height={18} />
+              <Skeleton width={170} height={18} />
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      );
+    })
+  )
+        }
         </Grid>
       </Box>
     </>

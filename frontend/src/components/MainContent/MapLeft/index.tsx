@@ -1,14 +1,18 @@
-import { makeStyles } from "@material-ui/core";
+import { Button, FormControl, makeStyles } from "@material-ui/core";
 import {
   Grid,
   Card,
   CardContent,
   CardMedia,
-  Box
+  Box,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent
 } from "@mui/material";
 import { CardActionArea } from '@mui/material';
 
-import { useContext } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import { StoresContext } from "../../../contexts/StoresContext";
 
 interface Props {
@@ -20,18 +24,89 @@ const MapLeft: React.FC<Props> = ({ selectStore }) => {
   const { stores, getRateColor, getAvgRate, getDeductedPrice } = useContext(StoresContext);
   const classes = useStyles();
   const totalStores = stores.length || 0
-  console.log(stores)
+  //console.log(stores)
 
   const DEFAULT_STORE_URL = "https://i.pinimg.com/originals/70/88/36/708836ce6b5cd801c2b33fc4f3feb476.jpg"
 
+  let sortedRoom = stores;
+  //const [sortedRoom, setSortedRoom] = useState(1);
+  //console.log(sortedRoom);
+  
+  const [sort, setSort] = useState("");
+
+  // const handleChange = (event: SelectChangeEvent<string>) => {
+  //   setSort(event.target.value)
+  //   let tempStores;
+  //   if(sort === "cheapest") {
+  //     tempStores = stores.sort(function(a:any,b:any) {return a.price - b.price})
+  //     //console.log(tempStores);
+  //     sortedRoom = tempStores;
+  //     //console.log("cheapest");
+      
+  //   }
+  //   if(sort === "best") {
+  //     tempStores = stores.sort(function(a:any,b:any) {
+  //       if(a.name < b.name) { return -1 };
+  //       if(a.name > b.name) { return 1 };
+  //       return 0
+  //     }) 
+  //     //console.log(tempStores);
+  //     sortedRoom = tempStores;
+  //     //console.log("best");
+      
+  //   }
+  // }
+
+  if(sort) {
+    let tempStores;
+    if(sort === "cheapest") {
+      tempStores = stores.sort(function(a:any,b:any)
+      {return a.price - b.price})
+      //console.log(tempStores);
+      sortedRoom = tempStores;
+    }
+    else {
+    //if(sort === "best") {
+      //thu tu ten tang dan
+      tempStores = stores.sort(function(a:any,b:any) {
+        if(a.name < b.name) { return -1 };
+        if(a.name > b.name) { return 1 };
+        return 0
+      }) 
+
+      // tempStores = stores.sort(function(a:any,b:any) {
+      //   return a.{stores.forEach(getAvgRate(stores.rate))}
+      // }
+      // )
+      //console.log(tempStores);
+      sortedRoom = tempStores;
+    }
+    //console.log(sort);
+  }
+  
   return (
     <>
       <h2>Select between {totalStores} barber shops in the area</h2>
-      <h3>Here would be sort and filter</h3>
+      <Box sx={{ minWidth: 120 }} >
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Sort by:</InputLabel>
+          <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={sort}
+          label="Age"
+          onChange={(event) => setSort(event.target.value)}
+          //onChange={handleChange}
+          >
+            <MenuItem value="best">Best</MenuItem>
+            <MenuItem value="cheapest">Cheapest</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
       {/* style here just for example */}
       <Box style={{ maxHeight: '81vh', maxWidth: '100wh', overflow: 'auto' }}>
         <Grid container style={{ alignItems: 'space-between', justifyContent: 'center' }} >
-          {stores.map((store: any) => {
+          {sortedRoom.map((store: any) => {
             return (
               <Card sx={{ maxWidth: 345 }} className={classes.paperMap} key = {store?.id} onClick = {() => selectStore(store?.id)} >
                 <CardActionArea>
@@ -77,3 +152,7 @@ const useStyles = makeStyles((theme: any) => ({
 }));
 
 export default MapLeft;
+function forEach(stores: import("../../../contexts/IStores").default[], arg1: Number) {
+  throw new Error("Function not implemented.");
+}
+

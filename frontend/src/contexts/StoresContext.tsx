@@ -16,6 +16,7 @@ export interface StoresContextDefault {
     getRateColor: (rate: Number) => any,
     getAvgRate: (Number: Array<number>) => Number,
     getDeductedPrice: (price: number, discount: number) => number,
+    // handleSort: () => void
 }
 
 const storesContextDataDefault = {
@@ -27,6 +28,7 @@ const storesContextDataDefault = {
     getRateColor: () => '',
     getAvgRate: () => 0,
     getDeductedPrice: () => 0,
+    // handleSort: () => {}
 }
 
 export const StoresContext = createContext<StoresContextDefault>(
@@ -37,6 +39,7 @@ const StoresContextProvider = ({ children }: StoreContextProps) => {
     const [stores, setStores] = useState<IStores[]>(storesContextDataDefault.stores);
     const [username, setUsername] = useState(storesContextDataDefault.username);
     const [auth, setAuth] = useState(storesContextDataDefault.auth);
+    // const [sortText, setSortText] = useState("");
 
     useEffect(() => {
         APIGetAllStores()
@@ -77,6 +80,10 @@ const StoresContextProvider = ({ children }: StoreContextProps) => {
         else return 0;
     } 
     const getDeductedPrice = (price: number, discount: number) => Math.round((price*(100-discount)/100)*1)/1;
+
+    // const handleSort = (event) => {
+    //     setSortText(event.target.value)
+    // }
 
     const StoresContextData = {
         stores,

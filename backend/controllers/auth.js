@@ -32,7 +32,7 @@ router.post('/register', async (req, res) => {
         });
         user.accessToken = accessToken;
         const savedUser = await user.save();
-        res.status(200).json({
+        res.status(201).json({
             user: savedUser,
             message: "You have signed up successfully"
         });

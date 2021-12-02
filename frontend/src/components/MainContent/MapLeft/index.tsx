@@ -1,3 +1,26 @@
+import { Button, FormControl, makeStyles } from "@material-ui/core";
+import {
+  Grid,
+  Card,
+  CardContent,
+  CardMedia,
+  Box,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+  Skeleton
+} from "@mui/material";
+import { CardActionArea } from '@mui/material';
+
+import { ChangeEvent, useContext, useState } from "react";
+import { StoresContext } from "../../../contexts/StoresContext";
+
+interface Props {
+  selectStore: (id: string) => any;
+}
+
+const MapLeft: React.FC<Props> = ({ selectStore }) => {
 
   const { stores, getRateColor, getAvgRate, getDeductedPrice } = useContext(StoresContext);
   const classes = useStyles();
@@ -65,24 +88,28 @@
   
   return (
     <>
-      <h2>Select between {totalStores} barber shops in the area</h2>
-      <Box sx={{ minWidth: 120 }} >
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Sort by:</InputLabel>
-          <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={sort}
-          label="Age"
-          onChange={(event) => setSort(event.target.value)}
-          //onChange={handleChange}
-          disabled={sortedRoom.length === 0}
-          >
-            <MenuItem value="best">Best</MenuItem>
-            <MenuItem value="cheapest">Cheapest</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
+      <div style = {{display: 'flex'}}>
+         <h2>Select between {totalStores} barber shops in the area</h2>
+         <div style = {{flex: 1}}></div>
+         <Box style={{  justifyContent: 'flex-end', marginRight: '5rem'}}>
+            <FormControl style={{ minWidth: 100, height: 80 }}>
+               <InputLabel id="demo-simple-select-label">Sort by:</InputLabel>
+               <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={sort}
+                  label="Sort by:"
+                  onChange={(event) => setSort(event.target.value)}
+                  //onChange={handleChange}
+                  disabled={sortedRoom.length === 0}
+                  style={{ height: '3em', textAlign: 'center' }}
+               >
+                  <MenuItem value="best">Best</MenuItem>
+                  <MenuItem value="cheapest">Cheapest</MenuItem>
+               </Select>
+            </FormControl>
+         </Box>
+         </div>
       {/* style here just for example */}
       <Box style={{ maxHeight: '81vh', maxWidth: '100wh', overflow: 'auto' }}>
         <Grid container style={{ alignItems: 'space-between', justifyContent: 'center' }} >
@@ -139,6 +166,7 @@
     </>
 
   );
+};
 
 const useStyles = makeStyles((theme: any) => ({
   paperMap: {

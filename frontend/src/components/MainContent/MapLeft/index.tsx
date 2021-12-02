@@ -1,26 +1,3 @@
-import { Button, FormControl, makeStyles } from "@material-ui/core";
-import {
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
-  Box,
-  InputLabel,
-  Select,
-  MenuItem,
-  SelectChangeEvent,
-  Skeleton
-} from "@mui/material";
-import { CardActionArea } from '@mui/material';
-
-import { ChangeEvent, useContext, useState } from "react";
-import { StoresContext } from "../../../contexts/StoresContext";
-
-interface Props {
-  selectStore: (id: string) => any;
-}
-
-const MapLeft: React.FC<Props> = ({ selectStore }) => {
 
   const { stores, getRateColor, getAvgRate, getDeductedPrice } = useContext(StoresContext);
   const classes = useStyles();
@@ -162,7 +139,6 @@ const MapLeft: React.FC<Props> = ({ selectStore }) => {
     </>
 
   );
-};
 
 const useStyles = makeStyles((theme: any) => ({
   paperMap: {

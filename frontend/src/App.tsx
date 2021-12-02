@@ -2,8 +2,8 @@ import { BrowserRouter, Route, Switch }       from "react-router-dom";
 import StoresContextProvider                  from "./contexts/StoresContext";
 // Component
 
-// import Login from "./pages/login/Login";
-// import Register from "./pages/register/Register";
+import Login from "./pages/login/Login";
+import Register from "./pages/register/Register";
 import MainContent                            from "./components/MainContent";
 import Navbar                                 from "./components/Navbar";
 import StoreInfo                              from "./components/StoreInfo";
@@ -30,8 +30,8 @@ const App: React.FC = () => {
               <Navbar />
               <Route exact path="/map" render={(routeProps) => <MainContent {...routeProps} />}/>
               <Route exact path="/map/:id" component={StoreInfo} />
-              {/* <Route path="/login" component={Login} /> */}
-              {/* <Route path="/register" component={Register} /> */}
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
             </ThemeProvider>
           </>
         </Switch>

@@ -1,12 +1,13 @@
 import axios from "axios";
 import constants from "../constants.json";
 
-const PostRegister = (username, name, passwordHash) => {
+const PostRegister = (username, fullname, passwordHash, role) => {
   return axios
     .post(constants.baseAddress + `auth/register`, {
       username,
-      name,
+      fullname,
       passwordHash,
+      role
     })
     .then((response) => response.data)
     .catch((error) => console.log(error));

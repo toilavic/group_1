@@ -109,7 +109,7 @@ const MapLeft: React.FC<Props> = ({ selectStore }) => {
       {/* style here just for example */}
       <Box style={{ maxHeight: '81vh', maxWidth: '100wh', overflow: 'auto' }}>
         <Grid container style={{ alignItems: 'space-between', justifyContent: 'center' }} >
-          {sortedRoom ? ( sortedRoom.map((store: any) => {
+          {sortedRoom.length ? ( sortedRoom.map((store: any) => {
             return (
               <Card sx={{ maxWidth: 345 }} className={classes.paperMap} key = {store?.id} onClick = {() => selectStore(store?.id)} >
                 <CardActionArea>
@@ -139,7 +139,7 @@ const MapLeft: React.FC<Props> = ({ selectStore }) => {
             );
           })
   ) : (
-    Array.from(new Array(5)).map((store: any) => {
+    Array.from(new Array(9)).map((store: any) => {
       return (
         <Card sx={{ maxWidth: 345 }} className={classes.paperMap} key = {store?.id} onClick = {() => selectStore(store?.id)} >
           <CardActionArea>

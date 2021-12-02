@@ -1,9 +1,8 @@
 import {
-  Box,
   Button,
+  Checkbox,
   Container,
   Grid,
-  TextField,
   Typography,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -11,43 +10,94 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { ChangeEvent, FC, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import PostRegister from "../../api/PostRegister";
+import { Form, Formik } from "formik";
+import Wrapper from "../../components/Wrapper";
+import InputField from "../../components/InputField";
 
 const theme = createTheme();
 
 const Register: FC = () => {
+  let history = useHistory();
+  const [username, setUsername] = useState<string>("");
+  //const [name, setName] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [fullname, setFullname] = useState<string>("");
+  const [role, setRole] = useState<Boolean>();
+  const [loi, setLoi] = useState<Boolean>(false);
 
-    let history = useHistory();
-    const [username, setUsername] = useState<string>("")
-    const [name, setName] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+  // const handleRegister = (event: ChangeEvent<HTMLInputElement>) => {
+  //   PostRegister(username, name, password).then((response) => {
+  //     console.log(response);
+  //     if (response) {
+  //       history.push("/login");
+  //     }
+  //   });
+  //   event.preventDefault();
+  // };
 
-    const handleRegister = (event:ChangeEvent<HTMLInputElement>) => {
-        PostRegister(username,name,password)
-        .then(response => {
-          console.log(response);
-          if(response) {
-            history.push("/login")
-          }
-        })
-        event.preventDefault();
-    };
+  const handleTest = (values: any) => {
+    console.log(values);
+    // PostRegister(username,fullname,password,role).then((response) => {
+    //   if (response) {
+    //     history.push("/login");
+    //   }
+    //   else {
+    //     setLoi(true);
+    //   }
+    // })
+  }
+
+  //const onRegisterSubmit = values;
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+        <Wrapper>
+          {loi && <Typography variant="caption">Something's wrong</Typography> }
           <Typography component="h1" variant="h5">
             REGISTER
           </Typography>
-          <Box component="form" onSubmit={handleRegister} sx={{ mt: 3 }}>
+
+          <Formik
+            initialValues={{ username: "", fullname: "", password: "", role }}
+            onSubmit={handleTest}
+          >
+            {() => (
+              <Form>
+                <Grid container spacing={2}>
+                    <InputField
+                      name="username"
+                      placeholder="Username"
+                      label="Username"
+                      type="text"
+                    />
+                    <InputField
+                      name="fullname"
+                      placeholder="Fullname"
+                      label="fullname"
+                      type="text"
+                    />
+                    <InputField
+                      name="password"
+                      placeholder="Password"
+                      label="password"
+                      type="password"
+                    />
+                    <Checkbox name="role"/>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    REGISTER
+                  </Button>
+                </Grid>
+              </Form>
+            )}
+          </Formik>
+          {/* <Box component="form" onSubmit={handleRegister} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
             <Grid item xs={12}>
                 <TextField
@@ -102,8 +152,8 @@ const Register: FC = () => {
                 </Link>
               </Grid>
             </Grid>
-          </Box>
-        </Box>
+          </Box> */}
+        </Wrapper>
       </Container>
     </ThemeProvider>
   );

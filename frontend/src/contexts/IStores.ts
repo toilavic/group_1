@@ -12,4 +12,5 @@ export default interface IStore {
     createAt: Date,
     updateAt: Date,
     location: any,
+    rateArv?: Number
 }

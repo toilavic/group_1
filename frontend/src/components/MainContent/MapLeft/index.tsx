@@ -8,12 +8,11 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  SelectChangeEvent,
   Skeleton
 } from "@mui/material";
 import { CardActionArea } from '@mui/material';
 
-import { ChangeEvent, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { StoresContext } from "../../../contexts/StoresContext";
 
 interface Props {
@@ -25,65 +24,30 @@ const MapLeft: React.FC<Props> = ({ selectStore }) => {
   const { stores, getRateColor, getAvgRate, getDeductedPrice } = useContext(StoresContext);
   const classes = useStyles();
   const totalStores = stores.length || 0
-  //console.log(stores)
 
   const DEFAULT_STORE_URL = "https://i.pinimg.com/originals/70/88/36/708836ce6b5cd801c2b33fc4f3feb476.jpg"
 
   let sortedRoom = stores;
-  //const [sortedRoom, setSortedRoom] = useState(1);
-  //console.log(sortedRoom);
-  
-  const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState("");
-
-  // const handleChange = (event: SelectChangeEvent<string>) => {
-  //   setSort(event.target.value)
-  //   let tempStores;
-  //   if(sort === "cheapest") {
-  //     tempStores = stores.sort(function(a:any,b:any) {return a.price - b.price})
-  //     //console.log(tempStores);
-  //     sortedRoom = tempStores;
-  //     //console.log("cheapest");
-      
-  //   }
-  //   if(sort === "best") {
-  //     tempStores = stores.sort(function(a:any,b:any) {
-  //       if(a.name < b.name) { return -1 };
-  //       if(a.name > b.name) { return 1 };
-  //       return 0
-  //     }) 
-  //     //console.log(tempStores);
-  //     sortedRoom = tempStores;
-  //     //console.log("best");
-      
-  //   }
-  // }
 
   if(sort) {
     let tempStores;
     if(sort === "cheapest") {
-      tempStores = stores.sort(function(a:any,b:any)
-      {return a.price - b.price})
-      //console.log(tempStores);
+      tempStores = stores.sort(function(a:any,b:any) {
+        return a.price - b.price
+      })
       sortedRoom = tempStores;
     }
     else {
-    //if(sort === "best") {
-      //thu tu ten tang dan
-      tempStores = stores.sort(function(a:any,b:any) {
-        if(a.name < b.name) { return -1 };
-        if(a.name > b.name) { return 1 };
-        return 0
-      }) 
-
-      // tempStores = stores.sort(function(a:any,b:any) {
-      //   return a.{stores.forEach(getAvgRate(stores.rate))}
-      // }
-      // )
-      //console.log(tempStores);
+      var tam = stores.map((store:any) => {
+        store.rateArv = getAvgRate(store.rate);
+        return store;
+      });
+      tempStores = tam.sort(function(a:any, b:any) {
+        return b.rateArv - a.rateArv
+      })
       sortedRoom = tempStores;
     }
-    //console.log(sort);
   }
   
   return (
@@ -100,7 +64,6 @@ const MapLeft: React.FC<Props> = ({ selectStore }) => {
                   value={sort}
                   label="Sort by:"
                   onChange={(event) => setSort(event.target.value)}
-                  //onChange={handleChange}
                   disabled={sortedRoom.length === 0}
                   style={{ height: '3em', textAlign: 'center' }}
                >

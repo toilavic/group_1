@@ -63,6 +63,6 @@ app.use(async (req, res, next) => {
 
 
 app.use(middleware.unknownEndpoint); // handles unkown endpoints
-// app.use(middleware.errorHandler); // handles known errors
+app.use(middleware.errorHandler); // handles known errors
 
 module.exports = app;

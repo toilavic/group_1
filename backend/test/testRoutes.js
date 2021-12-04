@@ -3,9 +3,6 @@ const expect = require('chai').expect;
 chai.use(require('chai-http'));
 const server = require('./server');
 const apiAddress = 'http://localhost:4000';
-const User = require('../models/User');
- 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWE5NTUxZmMxODRlY2VmYjg5MWYxOGEiLCJpYXQiOjE2Mzg0ODgxMjksImV4cCI6MTYzODU3NDUyOX0.6y1J7f4Y4q36rK7zhm273X1Yfp0cob6OlqUOCy0hOhY';
 
 describe('Test routes', function() {
     // Start the server
@@ -827,20 +824,6 @@ describe('Test routes', function() {
                 throw err;
             });
         })
-        // it('Should reject (status 200) the request if username is wrong and password is correct', async function() {
-        //     await chai.request(apiAddress)
-        //     .post('/auth/login')
-        //     .send({
-        //         username: "tester01",
-        //         passwordHash: "12345678"
-        //     })
-        //     .then(res => {
-        //         expect(res.status).to.equal(200);
-        //     })
-        //     .catch(err => {
-        //         throw err;
-        //     });
-        // })
     })    
 
     //Get user information

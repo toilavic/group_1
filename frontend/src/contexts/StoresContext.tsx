@@ -59,12 +59,10 @@ const StoresContextProvider = ({ children }: StoreContextProps) => {
             .then(response => {
                 if(!response) alert('Something went wrong !')
                 else console.log(response)
-                const _token = response
-                const _username = response.user.username
-                console.log(_username);
+                const _token = response.accessToken
                 if (_token) {
                     localStorage.setItem("token", _token)
-                    localStorage.setItem("username", _username )
+                    localStorage.setItem("username", response.user.username )
                     setAuth(true)
                 }
             })

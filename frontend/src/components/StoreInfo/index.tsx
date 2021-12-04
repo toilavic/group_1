@@ -22,6 +22,8 @@ import { useContext } from "react";
 import { StoresContext } from "../../contexts/StoresContext";
 
 import APIGetCommentsByID from '../../api/APIGetCommentsByID';
+import APIPostAComment from '../../api/APIPostAComment';
+
 import IStore from '../../contexts/IStores';
 
 const StoreInfo: React.FC = () => {
@@ -57,7 +59,20 @@ const StoreInfo: React.FC = () => {
 
     function onSubmitRate(event: any) {
         event.preventDefault();
-        console.log(userComment, rate)
+        console.log(id, rate, userComment)
+        APIPostAComment(id, rate, userComment)
+        .then(result => {
+            console.log(result)
+            if(result) {
+                if (result.status === 403) {
+                    // localStorage.removeItem('token')
+                    // localStorage.removeItem('username')
+                    // alert('Please login again!, msg: ' +result.data.message)
+                    // window.location.href = '/login';
+                }
+            } 
+        })
+        .catch(error => console.log(error))
     }
 
     const DEFAULT_STORE_URL = "https://i.pinimg.com/originals/70/88/36/708836ce6b5cd801c2b33fc4f3feb476.jpg"
@@ -89,7 +104,7 @@ const StoreInfo: React.FC = () => {
 
     return <div className={styles.container}>
         <Box style={{ marginTop: '1rem', padding: '0 2rem' }} >
-            <Grid container style={{ marginLeft: '10px', padding: '0rem 8rem' }} spacing={4}>
+            <Grid container spacing={4} style={{ marginLeft: '10px', padding: '0rem 8rem' }} >
                 <Grid item xs={7}>
                     <Card sx={{ maxWidth: '45vw', maxHeight: '35vh' }}>
                         <CardActionArea>

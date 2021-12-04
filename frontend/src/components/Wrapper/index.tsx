@@ -8,11 +8,12 @@ interface InterfaceWrapperProps {
 const Wrapper = ({children} : InterfaceWrapperProps) => {
     return (
         <Box sx={{
-            marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-          }}>
+            margin: "10px 10px",
+            justifyContent: "center"
+        }}>
             {children}
         </Box>
     )

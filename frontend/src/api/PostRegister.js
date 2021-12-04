@@ -1,11 +1,13 @@
 import axios from "axios";
 import constants from "../constants.json";
 
-const PostRegister = (username, fullname, passwordHash, role) => {
+const PostRegister = (username, name, passwordHash, role) => {
+  console.log(username,name,passwordHash,role);
+  console.log(constants.baseAddress);
   return axios
     .post(constants.baseAddress + `auth/register`, {
       username,
-      fullname,
+      name,
       passwordHash,
       role
     })

@@ -10,7 +10,6 @@ interface StoreContextProps {
 export interface StoresContextDefault {
     stores: IStores[],
     auth: Boolean,
-    username: String,
     storeId: string,
     Login: (email: String, password: String) => void,
     Logout: () => void,
@@ -24,7 +23,6 @@ export interface StoresContextDefault {
 const storesContextDataDefault = {
     stores: [],
     auth: false,
-    username: '',
     storeId: '',
     Login: () => { },
     Logout: () => { },
@@ -41,7 +39,6 @@ export const StoresContext = createContext<StoresContextDefault>(
 
 const StoresContextProvider = ({ children }: StoreContextProps) => {
     const [stores, setStores] = useState<IStores[]>(storesContextDataDefault.stores);
-    const [username, setUsername] = useState(storesContextDataDefault.username);
     const [auth, setAuth] = useState(storesContextDataDefault.auth);
     // const [sortText, setSortText] = useState("");
 
@@ -62,16 +59,20 @@ const StoresContextProvider = ({ children }: StoreContextProps) => {
             .then(response => {
                 if(!response) alert('Something went wrong !')
                 else console.log(response)
-                // const _token = response
-                // if (_token) {
-                //     localStorage.setItem("token", _token)
-                //     setAuth(true)
-                // }
+                const _token = response
+                const _username = response.user.username
+                console.log(_username);
+                if (_token) {
+                    localStorage.setItem("token", _token)
+                    localStorage.setItem("username", _username )
+                    setAuth(true)
+                }
             })
     };
 
     const Logout = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("username");
         setAuth(false);
     }
 
@@ -91,7 +92,6 @@ const StoresContextProvider = ({ children }: StoreContextProps) => {
     const StoresContextData = {
         stores,
         auth,
-        username,
         storeId,
         Login,
         Logout,

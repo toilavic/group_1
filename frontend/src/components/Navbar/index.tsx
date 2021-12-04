@@ -27,25 +27,27 @@ const Navbar = () => {
           </div>
           {auth ? (
             <Stack direction="row" spacing={2}>
-              <Button variant="text" color="inherit"
-                onClick={Logout}
-              >
-                <Typography variant="h6">LOGOUT</Typography>
-              </Button>
-            </Stack>
-          ) : (
-            <Stack direction="row" spacing={6}>
-              {/* <Typography variant="h6">
-                  <Link to="/login" className={classes.linkBtn}>
-                    LOGIN
-                  </Link>
-                </Typography> */}
+              <button className={styles.btn}>
+                {localStorage.getItem("username")}
+              </button>
               <button className={styles.btn}>
                 Contact us
               </button>
-              <button className={`${styles.btn} ${styles.btnDark}`}>
-                Log in
+              <button className={`${styles.btn} ${styles.btnDark}`}
+                onClick={Logout}
+              >Log out
               </button>
+            </Stack>
+          ) : (
+            <Stack direction="row" spacing={6}>
+              <button className={styles.btn}>
+                Contact us
+              </button>
+                <Link to="/login" className={classes.linkBtn}>
+                <button className={`${styles.btn} ${styles.btnDark}`}>
+                  Log in
+                  </button>
+                </Link>
             </Stack>
           )}
         </Toolbar>
@@ -66,6 +68,7 @@ const useStyles = makeStyles((theme: any) => ({
   linkBtn: {
     textDecoration: "none",
     marginLeft: '1rem',
+    color: "white"
   }
 }));
 

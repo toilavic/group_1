@@ -72,7 +72,6 @@ exports.allowIfLoggedin = async (req, res, next) => {
         const reqToken = req.rawHeaders[1]
         const verified = jwt.verify(reqToken, process.env.SECRET);
         const user = await User.findById(verified.userId)
-        if (user.role !== 'admin' ) return res.status(400).send('Access Denied, no admin permission');
         req.user = user;
         next();
         } catch (error) {

@@ -25,7 +25,7 @@ const MainContent: React.FC<Props> = ({ history }) => {
           <MapLeft selectStore = {selectStore} />
           </Grid>
           <Grid item xs={5}>
-          <MapRight />
+          <MapRight selectStore = {selectStore}/>
           </Grid>
         </Grid>
       </Box>

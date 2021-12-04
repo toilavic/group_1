@@ -71,8 +71,11 @@ exports.allowIfLoggedin = async (req, res, next) => {
     try {
         console.log('Go here ok')
         const reqToken = req.rawHeaders[1]
+        console.log(reqToken)
         const verified = jwt.verify(reqToken, process.env.SECRET);
+        console.log(verified)
         const user = await User.findById(verified.userId)
+        console.log(user)
         req.user = user;
         next();
     } catch (error) {

@@ -55,7 +55,7 @@ app.use(async (req, res, next) => {
     if (exp < Date.now().valueOf() / 1000) { 
       return res.status(401).json({ error: "JWT token has expired, please login to obtain a new one" });
     } 
-    res.locals.loggedInUser = await User.findById(userId); next(); 
+    // res.locals.loggedInUser = await User.findById(userId); next(); 
     } else { 
     next(); 
     } 
@@ -63,6 +63,6 @@ app.use(async (req, res, next) => {
 
 
 app.use(middleware.unknownEndpoint); // handles unkown endpoints
-app.use(middleware.errorHandler); // handles known errors
+// app.use(middleware.errorHandler); // handles known errors
 
 module.exports = app;

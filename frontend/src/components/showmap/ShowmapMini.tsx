@@ -36,9 +36,6 @@ const ShowmapMini: React.FC<Props> = ({ coordinates }) => {
                 width='100%'
                 {...viewport}
                 mapboxApiAccessToken={constants.MAPBOX_TOKEN}
-                onViewportChange={(viewport: any) => {
-                    setViewport(viewport);
-                }}
                 mapStyle="mapbox://styles/mapbox/streets-v11"
             >
                 <Marker

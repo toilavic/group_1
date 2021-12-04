@@ -25,6 +25,7 @@ import constants from "../../constants.json";
 
 interface Props {
   stores: IStore[];
+  selectStore: (id: string) => any;
 }
 
 const fullscreenControlStyle = {
@@ -40,15 +41,20 @@ const geolocateControlStyle = {
   top: 130,
 };
 
-const Showmap: React.FC<Props> = ({ stores }) => {
+const Showmap: React.FC<Props> = ({ stores, selectStore }) => {
 
   const [viewport, setViewport] = useState({
     latitude: 65.0118734,
     longitude: 25.4716809,
     zoom: 12,
   });
-  const { getRateColor, getAvgRate, getDeductedPrice } = useContext(StoresContext);
+  const { storeId, getRateColor, getAvgRate, getDeductedPrice } = useContext(StoresContext);
   const [selectedStore, setSelectedStore]: any = useState(null);
+
+  const getActiveStoreStyle = (id: string) => {
+    if (id === storeId) return styles.activeMarketPrice
+    else return styles.marketPrice
+  }
 
   return (
     <>
@@ -76,11 +82,11 @@ const Showmap: React.FC<Props> = ({ stores }) => {
               latitude={store.location.coordinates[1]}
               longitude={store.location.coordinates[0]}
             >
-              <button className={styles.marketPrice} onClick={(event) => {
-                  event.preventDefault();
-                  setSelectedStore(store);
-                }}>
-                  {store.price} €
+              <button className={getActiveStoreStyle(store.id)} onClick={(event) => {
+                event.preventDefault();
+                setSelectedStore(store);
+              }}>
+                {store.price} €
               </button>
             </Marker>
           );
@@ -93,27 +99,27 @@ const Showmap: React.FC<Props> = ({ stores }) => {
               setSelectedStore(null);
             }}
           >
-            <Card style = {{boxShadow: 'none', maxHeight: 345}}>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={DEFAULT_STORE_URL}
-                    alt="green iguana"
-                  />
-                  <CardContent>
-                    <h2>{selectedStore?.name}</h2>
-                    <h3>{selectedStore?.address}</h3>
-                    <h3 style = {{color: getRateColor(getAvgRate(selectedStore?.rate))} || 'green'}>{getAvgRate(selectedStore?.rate) || 0} ★ {` (${selectedStore?.rate.length || 0})`}</h3>
-                    <h3>{
-                    selectedStore?.discount_rate > 0 ? 
-                    `Original ${selectedStore?.price}€  => ${getDeductedPrice(selectedStore?.price, selectedStore?.discount_rate)}€` : 
+            <Card style={{ boxShadow: 'none', maxHeight: 345 }} onClick={() => selectStore(selectedStore?.id)}>
+              <CardMedia
+                component="img"
+                height="140"
+                image={DEFAULT_STORE_URL}
+                alt="green iguana"
+              />
+              <CardContent>
+                <h2>{selectedStore?.name}</h2>
+                <h3>{selectedStore?.address}</h3>
+                <h3 style={{ color: getRateColor(getAvgRate(selectedStore?.rate)) } || 'green'}>{getAvgRate(selectedStore?.rate) || 0} ★ {` (${selectedStore?.rate.length || 0})`}</h3>
+                <h3>{
+                  selectedStore?.discount_rate > 0 ?
+                    `Original ${selectedStore?.price}€  => ${getDeductedPrice(selectedStore?.price, selectedStore?.discount_rate)}€` :
                     `${selectedStore?.price}€`
-                    }
-                    </h3>
-                    <h3>Open from: 10:00 AM
-                    </h3>
-                  </CardContent>
-              </Card>
+                }
+                </h3>
+                <h3>Open from: 10:00 AM
+                </h3>
+              </CardContent>
+            </Card>
           </Popup>
         ) : null}
       </ReactMapGL>

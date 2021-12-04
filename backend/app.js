@@ -55,7 +55,7 @@ app.use(async (req, res, next) => {
     if (exp < Date.now().valueOf() / 1000) { 
       return res.status(401).json({ error: "JWT token has expired, please login to obtain a new one" });
     } 
-    // res.locals.loggedInUser = await User.findById(userId); next(); 
+    res.locals.loggedInUser = await User.findById(userId); next(); 
     } else { 
     next(); 
     } 

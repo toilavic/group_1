@@ -2,15 +2,15 @@ export default interface IStore {
     id: string,
     name: String,
     address: String,
-    rate: Array<Number>,
-    price: Number,
+    rate: Array<number>,
+    price: number,
     opentime: Date,
     contact_number: String,
     description: String,
-    discount_rate: Number,
+    discount_rate: number,
     instagram: String,
     createAt: Date,
     updateAt: Date,
     location: any,
-    rateArv?: Number
+    rateArv?: number
 }

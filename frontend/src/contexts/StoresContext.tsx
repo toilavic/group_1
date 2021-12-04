@@ -11,11 +11,13 @@ export interface StoresContextDefault {
     stores: IStores[],
     auth: Boolean,
     username: String,
+    storeId: string,
     Login: (email: String, password: String) => void,
     Logout: () => void,
     getRateColor: (rate: Number) => any,
     getAvgRate: (Number: Array<number>) => Number,
     getDeductedPrice: (price: number, discount: number) => number,
+    setStoreId: (id: string) => void,
     // handleSort: () => void
 }
 
@@ -23,11 +25,13 @@ const storesContextDataDefault = {
     stores: [],
     auth: false,
     username: '',
+    storeId: '',
     Login: () => { },
     Logout: () => { },
     getRateColor: () => '',
     getAvgRate: () => 0,
     getDeductedPrice: () => 0,
+    setStoreId: () => {}
     // handleSort: () => {}
 }
 
@@ -40,6 +44,8 @@ const StoresContextProvider = ({ children }: StoreContextProps) => {
     const [username, setUsername] = useState(storesContextDataDefault.username);
     const [auth, setAuth] = useState(storesContextDataDefault.auth);
     // const [sortText, setSortText] = useState("");
+
+    const [storeId, setStoreId] = useState<any>('')
 
     useEffect(() => {
         APIGetAllStores()
@@ -76,24 +82,23 @@ const StoresContextProvider = ({ children }: StoreContextProps) => {
     }
 
     const getAvgRate = (arrRate: Array<number>) => {
-        if (arrRate.length) return Math.round((arrRate.reduce((prev: number, curr: number) => prev + curr) / arrRate.length)* 10) / 10 ;
+        if (arrRate === undefined) return 0;
+        else if (arrRate.length) return Math.round((arrRate.reduce((prev: number, curr: number) => prev + curr) / arrRate.length)* 10) / 10 ;
         else return 0;
     } 
     const getDeductedPrice = (price: number, discount: number) => Math.round((price*(100-discount)/100)*1)/1;
-
-    // const handleSort = (event) => {
-    //     setSortText(event.target.value)
-    // }
 
     const StoresContextData = {
         stores,
         auth,
         username,
+        storeId,
         Login,
         Logout,
         getRateColor,
         getAvgRate,
         getDeductedPrice,
+        setStoreId
     }
 
     return (

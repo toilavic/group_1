@@ -22,7 +22,8 @@ router.post('/', user.allowIfLoggedin, async (req, res) => {
     const accessToken = req.headers["x-access-token"];
     const storeId = req.body.storeId;
     const user = await jwt.verify(accessToken, process.env.SECRET);
-    if (!user.userId) return res.sendStatus(403)
+    console.log(user)
+    // if (!user.userId) return res.sendStatus(403)
     const store = await Items.findById(storeId)
     const userName = await User.findById(user.userId)
     const rate = new Rate({

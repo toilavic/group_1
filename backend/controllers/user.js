@@ -70,14 +70,11 @@ exports.grantAccess = function (action, resource) {
 exports.allowIfLoggedin = async (req, res, next) => {
     try {
         const reqToken = req.headers['x-access-token']
-        console.log(reqToken)
         const verified = jwt.verify(reqToken, process.env.SECRET);
         const user = await User.findById(verified.userId)
-        console.log(user)
         req.user = user;
         next();
     } catch (error) {
-        console.log('not ok go here')
         res.status(403).send(error);
     }
 }

@@ -1,7 +1,7 @@
 const express = require('express');
 const User = require('../models/User');
 const { roles } = require('../roles')
-const jwt =  require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 exports.getUsers = async (req, res, next) => {
     const users = await User.find({});
@@ -9,7 +9,7 @@ exports.getUsers = async (req, res, next) => {
         data: users
     });
 }
-   
+
 exports.getUser = async (req, res, next) => {
     try {
         const userId = req.params.userId;
@@ -51,15 +51,15 @@ exports.deleteUser = async (req, res, next) => {
     }
 }
 
-exports.grantAccess = function(action, resource) {
+exports.grantAccess = function (action, resource) {
     return async (req, res, next) => {
         try {
-            const permission =  roles.can(req.user.role)[action](resource);
+            const permission = roles.can(req.user.role)[action](resource);
             if (!permission.granted) {
-            return res.status(401).json({
-                error: "You don't have enough permission to perform this action"
-            });
-            }   
+                return res.status(401).json({
+                    error: "You don't have enough permission to perform this action"
+                });
+            }
             next()
         } catch (error) {
             res.status(400).send(error);
@@ -69,12 +69,14 @@ exports.grantAccess = function(action, resource) {
 
 exports.allowIfLoggedin = async (req, res, next) => {
     try {
+        console.log('Go here ok')
         const reqToken = req.rawHeaders[1]
         const verified = jwt.verify(reqToken, process.env.SECRET);
         const user = await User.findById(verified.userId)
         req.user = user;
         next();
-        } catch (error) {
-            res.status(403).send(error);
+    } catch (error) {
+        console.log('not ok go here')
+        res.status(403).send(error);
     }
 }

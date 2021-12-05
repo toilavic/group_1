@@ -8,6 +8,7 @@ import ReactMapGL, {
   NavigationControl,
   Popup,
 } from "react-map-gl";
+import mapboxgl from "mapbox-gl";
 
 import IStore from "../../contexts/IStores";
 import { useContext } from "react";
@@ -126,5 +127,9 @@ const Showmap: React.FC<Props> = ({ stores, selectStore }) => {
     </>
   );
 };
+
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 export default Showmap;

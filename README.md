@@ -1,5 +1,7 @@
 # Haircut app
-### DOCUMENTATION: https://docs.google.com/document/d/1qKmIqAfTSxNC-mSzHoeMiRJQSIKU0rRjxf-YufIMjE0/edit?usp=sharing
+### TECHNICAL PROJECT PLAN: https://docs.google.com/document/d/1qKmIqAfTSxNC-mSzHoeMiRJQSIKU0rRjxf-YufIMjE0/edit?usp=sharing
+### DEPLOYMENT: https://docs.google.com/document/d/1DCFaY1nf6H6uV0-bnfGbNTWu0f1uhIhvseD_JTo_uCs/edit
+
 # Requirements:
 Docker, docker-compose, npm to run script
 

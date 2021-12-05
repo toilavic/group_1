@@ -28,16 +28,16 @@ import IStore from '../../contexts/IStores';
 
 const StoreInfo: React.FC = () => {
     const { id } = useParams<{ id: string }>();
-    const { getDeductedPrice, getRateColor, getAvgRate } = useContext(StoresContext);
+    const { getDeductedPrice, getRateColor, getAvgRate, onUpdateState, setOnUpdateState  } = useContext(StoresContext);
 
     const [selectedStore, setSelectedStore] = useState<IStore>()
     const [comments, setComments] = useState<any>([])
     const [rate, setRate] = useState<number | null>(0);
-    const [userComment, setUserComment] = useState('')
+    const [userComment, setUserComment] = useState('');
 
     async function _APIGetStoreByID() {
         const result = await APIGetStoreByID(id)
-        if (result) if (result.status == 200) {
+        if (result) if (result.status === 200) {
             console.log(result.data)
             setSelectedStore(result.data)
         }
@@ -45,7 +45,7 @@ const StoreInfo: React.FC = () => {
 
     async function _APIGetCommentsByID() {
         const result = await APIGetCommentsByID(id)
-        if (result) if (result.status == 200) {
+        if (result) if (result.status === 200) {
             const _result = result.data
             console.log(result.data)
             setComments(_result.reverse())
@@ -65,10 +65,13 @@ const StoreInfo: React.FC = () => {
             console.log(result)
             if(result) {
                 if (result.status === 403) {
-                    // localStorage.removeItem('token')
-                    // localStorage.removeItem('username')
-                    // alert('Please login again!, msg: ' +result.data.message)
-                    // window.location.href = '/login';
+                    localStorage.removeItem('token')
+                    localStorage.removeItem('username')
+                    alert('Please login again!')
+                    window.location.href = '/login';
+                } else {
+                    setOnUpdateState(!onUpdateState)
+                    alert('Thank you for your comment!')
                 }
             } 
         })
@@ -100,7 +103,7 @@ const StoreInfo: React.FC = () => {
     useEffect(() => {
         _APIGetStoreByID()
         _APIGetCommentsByID()
-    }, [])
+    }, [onUpdateState])
 
     return <div className={styles.container}>
         <Box style={{ marginTop: '1rem', padding: '0 2rem' }} >
@@ -125,7 +128,7 @@ const StoreInfo: React.FC = () => {
 
                 <Grid item xs={7}>
                     <div style={{ width: '45vw', borderRadius: '10px', overflow: 'hidden' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '42vw' }}>
+                        {selectedStore ? <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '42vw' }}>
                             <h1>{selectedStore?.name}</h1>
                             <h1 style={{ color: 'red' }}>{selectedStore?.discount_rate ? `-${selectedStore?.discount_rate}%` : ''}</h1>
                             <h1>{
@@ -138,6 +141,7 @@ const StoreInfo: React.FC = () => {
                                 <InstagramIcon sx={{ fontSize: 40 }} color="success" />
                             </Link>
                         </div>
+                        : <h2>Loading....</h2>}
                         {/* &nbsp; */}
                         <div style={{ fontSize: '26px', fontWeight: 500 }}>{selectedStore?.address}</div><br />
                         <div style={{ fontSize: '24px' }}>{selectedStore?.description}</div>
@@ -180,6 +184,44 @@ const StoreInfo: React.FC = () => {
 
                 <Grid item xs={7}>
                     <h1>Services</h1>
+                    <br/><h2>Haircut normal</h2>
+                    <Card style={{ borderColor: 'black', marginTop: '1rem', maxWidth: '40vw'}}>
+                        <CardContent>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <h3>Haircut long hair</h3>
+                                <h3 style = {{marginRight: '1rem'}}>From {selectedStore?.price} €</h3>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <h4>Cut or trim of long hair. Include wash.</h4>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <br/><h2>Coloring</h2>
+                    <Card style={{ borderColor: 'black', marginTop: '1rem', maxWidth: '40vw'}}>
+                        <CardContent>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <h3>Color & Cut (Short)</h3>
+                                <h3 style = {{marginRight: '1rem'}}>From 59 €</h3>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <h4>Haircut and color, short hair. Include wash.</h4>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <br/><h2>Muticolor/Hightlights</h2>
+                    <Card style={{ borderColor: 'black', marginTop: '1rem', maxWidth: '40vw'}}>
+                        <CardContent>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <h3>Multiplecolor & Cut (Short)</h3>
+                                <h3 style = {{marginRight: '1rem'}}>From 80 €</h3>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <h4>Haircut and multiple color, short hair. Include wash.</h4>
+                            </div>
+                        </CardContent>
+                    </Card>
                 </Grid>
 
                 <Grid item xs={5} spacing={2}>

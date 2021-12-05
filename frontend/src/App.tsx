@@ -7,6 +7,7 @@ import Register from "./pages/register/Register";
 import MainContent                            from "./components/MainContent";
 import Navbar                                 from "./components/Navbar";
 import StoreInfo                              from "./components/StoreInfo";
+import LandingPage                            from './pages/landingpage'
 
 // Style
 import { ThemeProvider }                      from "@material-ui/core";
@@ -28,6 +29,7 @@ const App: React.FC = () => {
           <>
             <ThemeProvider theme={theme}>
               <Navbar />
+              <Route exact path="/" component={LandingPage} />
               <Route exact path="/map" render={(routeProps) => <MainContent {...routeProps} />}/>
               <Route exact path="/map/:id" component={StoreInfo} />
               <Route path="/login" component={Login} />

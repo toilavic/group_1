@@ -148,7 +148,5 @@ const useStyles = makeStyles((theme: any) => ({
 }));
 
 export default MapLeft;
-function forEach(stores: import("../../../contexts/IStores").default[], arg1: Number) {
-   throw new Error("Function not implemented.");
-}
+
 

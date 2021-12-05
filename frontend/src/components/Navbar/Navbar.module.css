@@ -11,17 +11,26 @@
     font-size: 16px;
 }
 
+.btnItem {
+    cursor: pointer;
+    display: inline-block;
+    background: none;
+    border: none;
+    font-weight: bold;
+    border-radius: 50px;
+    padding: 9px 22px;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+
 .btnDark {
     background-color: #000;
     color: #fff;
 }
 
-.btn:first-child {
-    border: none;
-    font-weight: bold;
-}
-
-.btn:first-child:hover{
+.btnItem:hover{
     color: #006241;
 }
 

@@ -16,18 +16,20 @@ import { StoresContext } from "../../contexts/StoresContext";
 
 const Login = () => {
   const { Login, auth } = useContext(StoresContext);
-
+  
   const handleSubmit = (values: any) => {
     let {username, passwordHash} = values;
     Login(username, passwordHash);
   };
+
+  const authToken = localStorage.getItem('token')
 
   const theme = createTheme();
   const classes = useStyles();
 
   return (
     <ThemeProvider theme={theme}>
-      {!auth ? (
+      {!auth && !authToken ? (
         <Container maxWidth="xs" style={{
           height: "600px",
           border: "1px solid",

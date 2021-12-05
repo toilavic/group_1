@@ -1,4 +1,4 @@
-import { Grid, InputLabel, TextField, Typography } from "@mui/material"
+import { Grid, TextField, Typography } from "@mui/material"
 import { useField } from "formik"
 
 interface InterfaceTextFieldProps {

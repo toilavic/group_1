@@ -11,12 +11,14 @@ export interface StoresContextDefault {
     stores: IStores[],
     auth: Boolean,
     storeId: string,
+    onUpdateState: boolean,
     Login: (email: String, password: String) => void,
     Logout: () => void,
     getRateColor: (rate: Number) => any,
     getAvgRate: (Number: Array<number>) => Number,
     getDeductedPrice: (price: number, discount: number) => number,
     setStoreId: (id: string) => void,
+    setOnUpdateState: (b: boolean) => void
     // handleSort: () => void
 }
 
@@ -24,12 +26,14 @@ const storesContextDataDefault = {
     stores: [],
     auth: false,
     storeId: '',
+    onUpdateState: false,
     Login: () => { },
     Logout: () => { },
     getRateColor: () => '',
     getAvgRate: () => 0,
     getDeductedPrice: () => 0,
-    setStoreId: () => {}
+    setStoreId: () => {},
+    setOnUpdateState: () => {}
     // handleSort: () => {}
 }
 
@@ -40,7 +44,7 @@ export const StoresContext = createContext<StoresContextDefault>(
 const StoresContextProvider = ({ children }: StoreContextProps) => {
     const [stores, setStores] = useState<IStores[]>(storesContextDataDefault.stores);
     const [auth, setAuth] = useState(storesContextDataDefault.auth);
-    // const [sortText, setSortText] = useState("");
+    const [onUpdateState, setOnUpdateState] = useState(false)
 
     const [storeId, setStoreId] = useState<any>('')
 
@@ -52,7 +56,7 @@ const StoresContextProvider = ({ children }: StoreContextProps) => {
                 if (res.status === 200) setStores(res.data)
             } 
         })
-    }, [])
+    }, [onUpdateState])
 
     const Login = (username: String, password: String) => {
         APILogin(username, password)
@@ -71,7 +75,7 @@ const StoresContextProvider = ({ children }: StoreContextProps) => {
     const Logout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("username");
-        setAuth(false);
+        auth ? setAuth(false) : window.location.reload();
     }
 
     function getRateColor (rate: Number) {
@@ -91,12 +95,14 @@ const StoresContextProvider = ({ children }: StoreContextProps) => {
         stores,
         auth,
         storeId,
+        onUpdateState,
         Login,
         Logout,
         getRateColor,
         getAvgRate,
         getDeductedPrice,
-        setStoreId
+        setStoreId,
+        setOnUpdateState
     }
 
     return (

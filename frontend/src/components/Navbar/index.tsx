@@ -1,10 +1,8 @@
 import { makeStyles } from "@material-ui/core";
 import {
   AppBar,
-  Button,
   Stack,
   Toolbar,
-  Typography,
 } from "@mui/material";
 
 import { useContext } from "react";
@@ -13,6 +11,7 @@ import { StoresContext } from "../../contexts/StoresContext";
 import styles from './Navbar.module.css'
 const Navbar = () => {
   const { Logout, auth } = useContext(StoresContext);
+  const tokenAuth = localStorage.getItem('token')
 
   const classes = useStyles();
 
@@ -25,12 +24,12 @@ const Navbar = () => {
               <img src="https://i.pinimg.com/originals/04/0e/d9/040ed98defb52539c6ef68703fbde157.png" alt="logo" className={`${styles.imgLogo} ${classes.logo}`} />
             </Link>
           </div>
-          {auth ? (
+          {auth || tokenAuth ? (
             <Stack direction="row" spacing={2}>
-              <button className={styles.btn}>
+              <button className={styles.btnItem}>
                 {localStorage.getItem("username")}
               </button>
-              <button className={styles.btn}>
+              <button className={styles.btnItem}>
                 Contact us
               </button>
               <button className={`${styles.btn} ${styles.btnDark}`}
@@ -40,10 +39,10 @@ const Navbar = () => {
             </Stack>
           ) : (
             <Stack direction="row" spacing={6}>
-              <button className={styles.btn}>
+              <button className={styles.btnItem}>
                 Contact us
               </button>
-                <Link to="/login" className={classes.linkBtn}>
+                <Link to="/login">
                 <button className={`${styles.btn} ${styles.btnDark}`}>
                   Log in
                   </button>

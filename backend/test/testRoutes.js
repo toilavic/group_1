@@ -712,8 +712,8 @@ describe('Test routes', function() {
             await chai.request(apiAddress)
             .post('/auth/register')
             .send({
-                username: "tester02",
-                name:"tester02",
+                username: "tester03",
+                name:"tester03",
                 passwordHash: "12345678",
                 role: "admin"
             })

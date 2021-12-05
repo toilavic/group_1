@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 });
 
 //CREATE A RATE
-router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
+router.post('/', user.allowIfLoggedin, async (req, res) => {
     const accessToken = req.headers["x-access-token"];
     const storeId = req.body.storeId;
     const user = await jwt.verify(accessToken, process.env.SECRET);

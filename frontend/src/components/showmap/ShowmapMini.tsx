@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ReactMapGL, {
     Marker,
 } from "react-map-gl";
+import mapboxgl from "mapbox-gl";
 
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import constants from "../../constants.json";
@@ -48,5 +49,9 @@ const ShowmapMini: React.FC<Props> = ({ coordinates }) => {
         </>
     );
 };
+
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 export default ShowmapMini;
